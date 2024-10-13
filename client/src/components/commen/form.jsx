@@ -17,6 +17,7 @@ export default function CommonForm({
   setformdata,
   onSubmit,
   buttonText,
+  isdiseble
 }) {
   function renderinputs(getcontrolItems) {
     let element = null;
@@ -30,7 +31,7 @@ export default function CommonForm({
             id={getcontrolItems.name}
             type={getcontrolItems.type}
             value={value}
-            required
+            // required
             onChange={(event) =>
               setformdata({
                 ...formdata,
@@ -120,6 +121,8 @@ export default function CommonForm({
       <Button
         type="submit"
         className="mt-3 w-full"
+        disabled={isdiseble}
+        
       >
         {buttonText || "Submit"}
       </Button>

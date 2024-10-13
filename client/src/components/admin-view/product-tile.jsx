@@ -7,6 +7,7 @@ export default function ProductTile({
   setformdata,
   setProducts,
   setcurrentId,
+  handleDeleteProduct,
 }) {
   return (
     <>
@@ -43,7 +44,7 @@ export default function ProductTile({
           >
             Edit
           </Button>
-          <Button>Delete</Button>
+          <Button onClick={() => handleDeleteProduct(product?._id)}>Delete</Button>
         </CardFooter>
       </Card>
     </>
