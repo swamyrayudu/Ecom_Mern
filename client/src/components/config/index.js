@@ -113,42 +113,42 @@ export const addProductFormElements = [
     {
       id: "home",
       label: "Home",
-      path: "/shop/home",
+      path: "/shopping/home",
     },
     {
       id: "products",
       label: "Products",
-      path: "/shop/listing",
+      path: "/shopping/listing",
     },
     {
       id: "men",
       label: "Men",
-      path: "/shop/listing",
+      path: "/shopping/listing",
     },
     {
       id: "women",
       label: "Women",
-      path: "/shop/listing",
+      path: "/shopping/listing",
     },
     {
       id: "kids",
       label: "Kids",
-      path: "/shop/listing",
+      path: "/shopping/listing",
     },
     {
       id: "footwear",
       label: "Footwear",
-      path: "/shop/listing",
+      path: "/shopping/listing",
     },
     {
       id: "accessories",
       label: "Accessories",
-      path: "/shop/listing",
+      path: "/shopping/listing",
     },
     {
       id: "search",
       label: "Search",
-      path: "/shop/search",
+      path: "/shopping/search",
     },
   ];
   

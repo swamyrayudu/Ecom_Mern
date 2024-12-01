@@ -62,90 +62,62 @@
   
 }
 
-
-.newtons-cradle {
-  --uib-size: 50px;
-  --uib-speed: 1.2s;
-  --uib-color: #474554;
-  position: relative;
+/* From Uiverse.io by mrpumps31232 */ 
+.loading-wave {
+  width: 300px;
+  height: 100px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  width: var(--uib-size);
-  height: var(--uib-size);
+  align-items: flex-end;
 }
 
-.newtons-cradle__dot {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  width: 25%;
-  transform-origin: center top;
+.loading-bar {
+  width: 20px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: #3498db;
+  border-radius: 5px;
+  animation: loading-wave-animation 1s ease-in-out infinite;
 }
 
-.newtons-cradle__dot::after {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 25%;
-  border-radius: 50%;
-  background-color: var(--uib-color);
+.loading-bar:nth-child(2) {
+  animation-delay: 0.1s;
 }
 
-.newtons-cradle__dot:first-child {
-  animation: swing var(--uib-speed) linear infinite;
+.loading-bar:nth-child(3) {
+  animation-delay: 0.2s;
 }
 
-.newtons-cradle__dot:last-child {
-  animation: swing2 var(--uib-speed) linear infinite;
+.loading-bar:nth-child(4) {
+  animation-delay: 0.3s;
 }
 
-@keyframes swing {
+@keyframes loading-wave-animation {
   0% {
-    transform: rotate(0deg);
-    animation-timing-function: ease-out;
-  }
-
-  25% {
-    transform: rotate(70deg);
-    animation-timing-function: ease-in;
+    height: 10px;
   }
 
   50% {
-    transform: rotate(0deg);
-    animation-timing-function: linear;
+    height: 50px;
+  }
+
+  100% {
+    height: 10px;
   }
 }
 
-@keyframes swing2 {
-  0% {
-    transform: rotate(0deg);
-    animation-timing-function: linear;
-  }
 
-  50% {
-    transform: rotate(0deg);
-    animation-timing-function: ease-out;
-  }
 
-  75% {
-    transform: rotate(-70deg);
-    animation-timing-function: ease-in;
-  }
+
+
+
+/* scroll bar */
+/* Hide scrollbar but keep scrolling */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in webkit browsers (Chrome, Safari) */
 }
 
-@layer base {
-  * {
-    @apply border-border;
-
-  
-  }
-  body {
-    @apply bg-background text-foreground;
-
-  
-  }
-
-  
+.scrollbar-hidden {
+  -ms-overflow-style: none;  /* Hide scrollbar in Internet Explorer */
+  scrollbar-width: none;     /* Hide scrollbar in Firefox */
 }
