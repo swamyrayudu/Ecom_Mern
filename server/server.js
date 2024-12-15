@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const authRouter = require('./routes/auth/auth-router');
 const adminproductRouter = require('./routes/admin/products-routes')
+const shoppingproductRouter = require('./routes/shop/products-routes')
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/admin/products',adminproductRouter)
+app.use('/api/shopping/products',shoppingproductRouter)
+
 
 // MongoDB connection
 mongoose.connect('mongodb://localhost:27017/ecomers')
