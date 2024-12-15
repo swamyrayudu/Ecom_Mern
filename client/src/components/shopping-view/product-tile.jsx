@@ -4,7 +4,9 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 
 export default function ShoppingProductTile({ product }) {
+    
   return (
+
     <Card className="w-full max-w-sm mx-auto">
       <div>
         <div className=" relative">
