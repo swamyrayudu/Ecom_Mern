@@ -21,6 +21,7 @@ import { useEffect } from "react";
 import { checkAction } from "./store/authSlice";
 // import { Skeleton } from "@/components/ui/skeleton"
 import Load from "./components/loading/load";
+import ProductDetails from "./components/shopping-view/product-details";
 
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
             <Route path="products" element={<AdminProducts />} />
             <Route path="orders" element={<AdminOrders />} />
             <Route path="features" element={<AdminFeatures />} />
+            
           </Route>
           <Route
             path="/shopping"
@@ -83,6 +85,7 @@ function App() {
             <Route path="account" element={<ShoppingAccount />} />
             <Route path="checkout" element={<ShoppingCheckout />} />
             <Route path="listing" element={<ShoppingListing />} />
+            <Route path="details/:id" element={<ProductDetails/>} />
           </Route>
 
           <Route path="*" element={<Notfound />} />

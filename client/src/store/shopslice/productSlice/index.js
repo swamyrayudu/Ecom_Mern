@@ -24,11 +24,11 @@ export const fetchallfilteredproducts = createAsyncThunk(
 );
 
 export const fetchgetProductDeatails = createAsyncThunk(
-  "/product/fetchallproducts",
+  "/product/fetchproductDetails",
   async (id) => {
 
     const result = await axios.get(
-      `http://localhost:9001/api/shopping/products/get?${id}`
+      `http://localhost:9001/api/shopping/products/get/${id}`
     );
     return result?.data;
   }
