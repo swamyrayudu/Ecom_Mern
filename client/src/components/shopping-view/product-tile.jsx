@@ -16,7 +16,12 @@ export default function ShoppingProductTile({ product }) {
             alt={product?.title}
           />
           {product?.salePrice > 0 ? (
-            <Badge className=" absolute top-2 left-2 bg-red-500 hover:bg-red-600"></Badge>
+            <Badge className=" absolute top-2 left-2 bg-red-500 hover:bg-red-600">
+                sale :
+                {
+                    product?.totalStock
+                }
+            </Badge>
           ) : null}
         </div>
         <CardContent className="p-4">
@@ -36,11 +41,11 @@ export default function ShoppingProductTile({ product }) {
                 product?.salePrice > 0 ? "line-through" : ""
               } text-lg font-semibold text-primary`}
             >
-              {product?.price}
+              {product?.price}₹
             </span>
             {product?.salePrice > 0 ? (
               <span className="text-lg font-semibold text-primary">
-                {product?.salePrice}
+                {product?.salePrice} ₹
               </span>
             ) : null}
           </div>

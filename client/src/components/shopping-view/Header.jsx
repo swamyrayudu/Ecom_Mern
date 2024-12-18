@@ -95,7 +95,7 @@ export default function ShoppingHeader() {
       <div className="flex items-center">
         <Link to="/shopping/home" className="flex items-center space-x-2">
           <ShoppingBag className="w-6 h-6 text-red-600" />
-          <span className="text-black font-bold text-lg">Ecommers</span>
+          <span className="text-black font-bold text-lg">ShopEase</span>
         </Link>
       </div>
 

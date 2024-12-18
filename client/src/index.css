@@ -61,63 +61,34 @@
 
   
 }
-
-/* From Uiverse.io by mrpumps31232 */ 
-.loading-wave {
-  width: 300px;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
+/* From Uiverse.io by Fernando-sv */ 
+.loader {
+  border: 4px solid rgba(0, 0, 0, .1);
+  border-left-color: transparent;
+  border-radius: 50%;
 }
 
-.loading-bar {
-  width: 20px;
-  height: 10px;
-  margin: 0 5px;
-  background-color: #3498db;
-  border-radius: 5px;
-  animation: loading-wave-animation 1s ease-in-out infinite;
+.loader {
+  border: 4px solid rgba(0, 0, 0, .1);
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
 }
 
-.loading-bar:nth-child(2) {
-  animation-delay: 0.1s;
+.loader {
+  border: 4px solid rgba(0, 0, 0, .1);
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+  animation: spin89345 1s linear infinite;
 }
 
-.loading-bar:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-.loading-bar:nth-child(4) {
-  animation-delay: 0.3s;
-}
-
-@keyframes loading-wave-animation {
+@keyframes spin89345 {
   0% {
-    height: 10px;
-  }
-
-  50% {
-    height: 50px;
+    transform: rotate(0deg);
   }
 
   100% {
-    height: 10px;
+    transform: rotate(360deg);
   }
-}
-
-
-
-
-
-
-/* scroll bar */
-/* Hide scrollbar but keep scrolling */
-.scrollbar-hidden::-webkit-scrollbar {
-  display: none; /* Hide scrollbar in webkit browsers (Chrome, Safari) */
-}
-
-.scrollbar-hidden {
-  -ms-overflow-style: none;  /* Hide scrollbar in Internet Explorer */
-  scrollbar-width: none;     /* Hide scrollbar in Firefox */
 }

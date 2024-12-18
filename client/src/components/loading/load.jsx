@@ -3,12 +3,8 @@ import React from 'react'
 export default function Load() {
   return (
     <> 
-<div className="loading-wave">
-  <div className="loading-bar"></div>
-  <div className="loading-bar"></div>
-  <div className="loading-bar"></div>
-  <div className="loading-bar"></div>
-</div>
+{/*From Uiverse.io by Fernando-sv  */}
+<div className="loader"></div>
 
 
     </>

@@ -4,7 +4,7 @@ import { Separator } from "../ui/separator";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
 
-export default function ShoppingFilter() {
+export default function ShoppingFilter({ filter, handleFilter }) {
   return (
     <div>
       <div className="p-4 bg-background">
@@ -22,7 +22,16 @@ export default function ShoppingFilter() {
                     key={`${keyoptions}-${options.label}`}
                     className="flex items-center gap-2 font-light"
                   >
-                    <Checkbox />
+                    <Checkbox
+                    checked={
+                      filter && Object.keys(filter) &&
+                      filter[keyoptions] &&
+                      filter[keyoptions].indexOf(options.id) > -1
+                    }
+                      onCheckedChange={() =>
+                        handleFilter(keyoptions, options.id)
+                      }
+                    />
                     {options.label}
                   </Label>
                 ))}
