@@ -22,7 +22,7 @@ export default function ShoppingProductTile({ product }) {
             }}
           />
           {product?.salePrice > 0 ? (
-            <Badge className=" absolute top-2 left-2 bg-red-500 hover:bg-red-600">
+            <Badge className=" absolute top-2 left-2 ">
                 sale :
                 {
                     product?.totalStock
@@ -57,7 +57,7 @@ export default function ShoppingProductTile({ product }) {
           </div>
         </CardContent>
         <CardFooter>
-            <Button className='w-full'>Add Cart</Button>
+            <Button className='w-full bg-red-500 hover:bg-red-600 font-medium'>Add Cart</Button>
         </CardFooter>
       </div>
     </Card>

@@ -53,14 +53,14 @@ export default function ShoppingHeader() {
   function Rightside(){
 
     return <div className="flex lg:items-center lg:flex-row flex-col gap-4">
-        <Button variant='outline' size="icon">
+        <Button variant='outline' size='icon'>
             <ShoppingCart className="w-6 h-6"/>
             <span className="sr-only">User Cart</span>
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar className="bg-black">
-              <AvatarFallback className='bg-black text-white font-extrabold'>
+              <AvatarFallback className='bg-red-500 hover:bg-red-600 text-white font-extrabold'>
                   {user.username[0].toUpperCase()}
               </AvatarFallback>
             </Avatar>

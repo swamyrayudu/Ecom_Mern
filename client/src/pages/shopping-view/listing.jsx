@@ -99,7 +99,7 @@ export default function ShoppingListing() {
       <div className="bg-white rounded-lg shadow-md w-full">
         {/* Header Section */}
         <div className="p-4 border-b flex items-center justify-between bg-gray-50 rounded-t-lg">
-          <h2 className="font-semibold text-xl text-gray-800">All Products</h2>
+          <h2 className="font-semibold text-xl text-red-500">All Products</h2>
           <div className="flex items-center gap-4">
             <Button variant="outline" className="cursor-text bg-gray-100">
               {productList?.length} Products
