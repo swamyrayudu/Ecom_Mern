@@ -90,7 +90,7 @@ export default function ShoppingHeader() {
   }
 
   return (
-    <div className="w-full h-[65px] bg-white flex items-center justify-between px-6 shadow-sm border-b border-gray-200">
+    <div className="w-full h-[65px] bg-white flex items-center justify-between px-6 shadow-sm border-b border-gray-200 ">
       {/* Ecommm Logo Section */}
       <div className="flex items-center">
         <Link to="/shopping/home" className="flex items-center space-x-2">

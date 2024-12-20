@@ -26,3 +26,6 @@ const carSchema = new mongoose.Schema(
   },
   { timestampes: true }
 );
+
+module.exports =mongoose.model('cart',carSchema)
+
