@@ -6,7 +6,7 @@ import {
   ShoppingCart,
   User,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Sheet,
@@ -30,12 +30,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "../config";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Logoutuser } from "@/store/authSlice";
+import CartWrapper from "./cart-wrapper";
 
 export default function ShoppingHeader() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   // console.log(user);
 
   const dispatch = useDispatch();
+  const [openCart, setOpenCart] = useState(false);
   function handelLogOut() {
     dispatch(Logoutuser());
   }
@@ -59,11 +61,16 @@ export default function ShoppingHeader() {
   function Rightside() {
     return (
       <div className="flex lg:items-center lg:flex-row flex-col gap-4">
-        <Sheet>
-          <Button variant="outline" size="icon">
+        <Sheet open={openCart} onOpenChange={() => setOpenCart(false)}>
+          <Button
+            onClick={() => setOpenCart(true)}
+            variant="outline"
+            size="icon"
+          >
             <ShoppingCart className="w-6 h-6" />
             <span className="sr-only">User Cart</span>
           </Button>
+          <CartWrapper />
         </Sheet>
         <DropdownMenu>
           <DropdownMenuTrigger>

@@ -62,7 +62,6 @@ const ShoppingProductSlice = createSlice({
         state.productDetails = action.payload.data;
       })
       .addCase(fetchgetProductDeatails.rejected, (state, action) => {
-        console.error(action.error.message);
         state.isLoading = false;
         state.productDetails = null;
       });

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchallfilteredproducts } from "@/store/shopslice/productSlice";
+import { fetchallfilteredproducts, fetchgetProductDeatails } from "@/store/shopslice/productSlice";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { sortOptions } from "@/components/config";
 import ShoppingFilter from "@/components/shopping-view/filter";
@@ -16,11 +16,11 @@ import { Button } from "@/components/ui/button";
 import Load from "@/components/loading/load";
 import { useSearchParams } from "react-router-dom";
 
-export default function ShoppingListing() {
+export default function ShoppingListing({product,handleProductCart}) {
   // Fetch list of products
 
   const dispatch = useDispatch();
-  const { productList, isLoading } = useSelector((state) => state.shopproducts);
+  const { productList, isLoading,productDetails } = useSelector((state) => state.shopproducts);
   const [sort, setsort] = useState(null);
   const [filter, setfilter] = useState({});
   const [searchparam, setsearchparam] = useSearchParams({});
@@ -63,6 +63,13 @@ export default function ShoppingListing() {
     setfilter(copyfilters);
     sessionStorage.setItem("filter", JSON.stringify(copyfilters));
   }
+  function handleproductDetails(getcurrentproductId){
+    console.log(getcurrentproductId);
+    dispatch(fetchgetProductDeatails(getcurrentproductId))
+  }
+  function handleProductCart(getcurrentproductId){
+    console.log(getcurrentproductId);
+  }
   useEffect(() => {
     if (filter !== null && sort !== null)
       dispatch(
@@ -79,7 +86,7 @@ export default function ShoppingListing() {
       setsearchparam(new URLSearchParams(createSearchQuery));
     }
   }, [filter]);
-  // console.log(filter);
+  // console.log(productDetails);
   if (isLoading) {
     return (
       <div className="w-full h-screen flex justify-center items-center">
@@ -135,7 +142,7 @@ export default function ShoppingListing() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
           {productList && productList.length > 0 ? (
             productList.map((product) => (
-              <ShoppingProductTile product={product} key={product._id} />
+              <ShoppingProductTile product={product} handleproductDetails={handleproductDetails} key={product._id} handleProductCart={handleProductCart} />
             ))
           ) : (
             <div className="w-full h-screen flex justify-center items-center ml-[310px]">
