@@ -1,4 +1,11 @@
-import { CircleUser, LogOut, Menu, ShoppingBag, ShoppingCart, User } from "lucide-react";
+import {
+  CircleUser,
+  LogOut,
+  Menu,
+  ShoppingBag,
+  ShoppingCart,
+  User,
+} from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -16,7 +23,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,14 +31,13 @@ import { shoppingViewHeaderMenuItems } from "../config";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Logoutuser } from "@/store/authSlice";
 
-
 export default function ShoppingHeader() {
-  const { isAuthenticated,user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
   // console.log(user);
 
-  const dispatch = useDispatch()
-  function handelLogOut(){
-      dispatch(Logoutuser())
+  const dispatch = useDispatch();
+  function handelLogOut() {
+    dispatch(Logoutuser());
   }
   function MenuItems() {
     return (
@@ -49,44 +55,45 @@ export default function ShoppingHeader() {
     );
   }
 
-// right contennt
-  function Rightside(){
-
-    return <div className="flex lg:items-center lg:flex-row flex-col gap-4">
-        <Button variant='outline' size='icon'>
-            <ShoppingCart className="w-6 h-6"/>
+  // right contennt
+  function Rightside() {
+    return (
+      <div className="flex lg:items-center lg:flex-row flex-col gap-4">
+        <Sheet>
+          <Button variant="outline" size="icon">
+            <ShoppingCart className="w-6 h-6" />
             <span className="sr-only">User Cart</span>
-        </Button>
+          </Button>
+        </Sheet>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar className="bg-black">
-              <AvatarFallback className='bg-red-500 hover:bg-red-600 text-white font-extrabold'>
-                  {user.username[0].toUpperCase()}
+              <AvatarFallback className="bg-red-500 hover:bg-red-600 text-white font-extrabold">
+                {user.username[0].toUpperCase()}
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side='right' className='w-56'>
-            <DropdownMenuLabel>
-                Author Name {user.username}
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator/>
+          <DropdownMenuContent side="right" className="w-56">
+            <DropdownMenuLabel>Author Name {user.username}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <User className="w-6 h-6 mr-2"/>
+              <User className="w-6 h-6 mr-2" />
               Profile
             </DropdownMenuItem>
-            <DropdownMenuSeparator/>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
-            <CircleUser className="w-6 h-6 mr-2"/>
-              <Link to='account'>Account</Link>
+              <CircleUser className="w-6 h-6 mr-2" />
+              <Link to="account">Account</Link>
             </DropdownMenuItem>
-            <DropdownMenuSeparator/>
+            <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handelLogOut}>
-              <LogOut className="w-6 h-6 mr-2"/>
+              <LogOut className="w-6 h-6 mr-2" />
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-    </div>
+      </div>
+    );
   }
 
   return (
@@ -120,7 +127,7 @@ export default function ShoppingHeader() {
           </SheetHeader>
           <div className="mt-4">
             <MenuItems />
-            <Rightside/>
+            <Rightside />
           </div>
         </SheetContent>
       </Sheet>
@@ -128,7 +135,7 @@ export default function ShoppingHeader() {
       {/*larger screens only icon righ */}
       {isAuthenticated && (
         <div className="hidden lg:block text-gray-800 ml-6">
-            <Rightside/>
+          <Rightside />
         </div>
       )}
     </div>

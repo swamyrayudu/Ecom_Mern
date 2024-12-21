@@ -5,7 +5,7 @@ const cors = require("cors");
 const authRouter = require("./routes/auth/auth-router");
 const adminproductRouter = require("./routes/admin/products-routes");
 const shoppingproductRouter = require("./routes/shop/products-routes");
-const cartRouter = require("./routes/cart/cart-router");
+const ShoppingcartRouter = require("./routes/cart/cart-router");
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/admin/products", adminproductRouter);
 app.use("/api/shopping/products", shoppingproductRouter);
-app.use("/api/shopping/cart", cartRouter);
+app.use("/api/shopping/cart", ShoppingcartRouter);
 
 // MongoDB connection
 mongoose
