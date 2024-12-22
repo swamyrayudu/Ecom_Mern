@@ -4,18 +4,22 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 
-export default function ShoppingProductTile({ product, handleProductCart }) {
+export default function ShoppingProductTile({
+  product,
+  handleProductCart,
+  handleProductDetails,
+}) {
   const navigate = useNavigate();
 
-  // Navigate to product details page
-  const handleProductDetails = (productId) => {
+  // Local function for navigation
+  const navigateToDetails = (productId) => {
     navigate(`/shopping/details/${productId}`, { state: { product } });
   };
 
   return (
     <Card className="w-full max-w-sm mx-auto">
       <div
-        onClick={() => handleProductDetails(product?._id)}
+        onClick={() => navigateToDetails(product?._id)}
         className="cursor-pointer"
       >
         <div className="relative">

@@ -6,7 +6,7 @@ import {
   ShoppingCart,
   User,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Sheet,
@@ -31,16 +31,27 @@ import { shoppingViewHeaderMenuItems } from "../config";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Logoutuser } from "@/store/authSlice";
 import CartWrapper from "./cart-wrapper";
+import { fetchcartItems } from "@/store/shopslice/cartSlice";
 
 export default function ShoppingHeader() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
-  // console.log(user);
+  const { cartItems } = useSelector((state) => state.shoppingcart);
 
   const dispatch = useDispatch();
   const [openCart, setOpenCart] = useState(false);
+
+  // Logout function
   function handelLogOut() {
     dispatch(Logoutuser());
   }
+
+  // Fetch cart items when user is authenticated and user.id changes
+  useEffect(() => {
+      dispatch(fetchcartItems(user.id));
+  }, [dispatch]); // Runs only when user.id changes
+  // console.log(cartItems?.);
+
+  // Menu items for the header
   function MenuItems() {
     return (
       <nav className="flex flex-col lg:flex-row lg:items-center gap-6">
@@ -57,20 +68,22 @@ export default function ShoppingHeader() {
     );
   }
 
-  // right contennt
+  // Right side content (Cart and user menu)
   function Rightside() {
     return (
       <div className="flex lg:items-center lg:flex-row flex-col gap-4">
         <Sheet open={openCart} onOpenChange={() => setOpenCart(false)}>
-          <Button
-            onClick={() => setOpenCart(true)}
-            variant="outline"
-            size="icon"
-          >
+          <Button onClick={() => setOpenCart(true)} variant="outline" size="icon">
             <ShoppingCart className="w-6 h-6" />
             <span className="sr-only">User Cart</span>
           </Button>
-          <CartWrapper />
+          <CartWrapper
+            cartItems={
+              cartItems && cartItems.items && cartItems.items.length > 0
+                ? cartItems.items
+                : []
+            }
+          />
         </Sheet>
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -128,9 +141,7 @@ export default function ShoppingHeader() {
         </SheetTrigger>
         <SheetContent side="left" className="bg-white w-full max-w-xs">
           <SheetHeader>
-            <SheetTitle className="text-black text-xl font-semibold">
-              Menu
-            </SheetTitle>
+            <SheetTitle className="text-black text-xl font-semibold">Menu</SheetTitle>
           </SheetHeader>
           <div className="mt-4">
             <MenuItems />
@@ -139,7 +150,7 @@ export default function ShoppingHeader() {
         </SheetContent>
       </Sheet>
 
-      {/*larger screens only icon righ */}
+      {/*larger screens only icon right */}
       {isAuthenticated && (
         <div className="hidden lg:block text-gray-800 ml-6">
           <Rightside />

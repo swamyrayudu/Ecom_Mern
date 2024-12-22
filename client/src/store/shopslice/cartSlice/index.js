@@ -2,58 +2,55 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  cartItems: [],
-  isLoading: false,
+    cartItems: [],
+    isLoading: false,
 };
 
-const addcart = createAsyncThunk(
+export const addcart = createAsyncThunk(
   "cart/addcart",
-  async ({ userId, productId, quntity }) => {
-    const result = axios.post("http://localhost:9001/api/shopping/add", {
+  async ({ userId, productId, quantity }) => {
+    const response = await axios.post("http://localhost:9001/api/shopping/cart/add", {
       userId,
       productId,
-      quntity,
+      quantity,
     });
-    return result.data;
-  }
+    return response.data;
+}
 );
 
-const fetchcartItems = createAsyncThunk(
+export const fetchcartItems = createAsyncThunk(
   "cart/fetchcartItems",
   async (userId) => {
-    const result = axios.get(
-      `http://localhost:9001/api/shopping/get/${userId}`,
-      {
-        userId,
-      }
+    const response = await axios.get(
+      `http://localhost:9001/api/shopping/cart/get/${userId}`
     );
-    return result.data;
+    return response.data;
   }
 );
 
-const deleteCartItem = createAsyncThunk(
+export const deleteCartItem = createAsyncThunk(
   "cart/deleteCartItem",
-  async ({ userId, productId, quntity }) => {
-    const result = axios.delete(
-      `http://localhost:9001/api/shopping/${userId}/${productId}`,
+  async ({ userId, productId }) => {
+    const response = await axios.delete(
+      `http://localhost:9001/api/shopping/cart/${userId}/${productId}`
+    );
+    return response.data;
+  }
+);
+
+export const updatCartItem = createAsyncThunk(
+  "cart/updatCartItem",
+  async ({ userId, productId, quantity }) => {
+    const response = await axios.put(
+      "http://localhost:9001/api/shopping/cart/update-cart",
       {
         userId,
         productId,
+        quantity,
       }
     );
-    return result.data;
-  }
-);
-
-const updatCartItem = createAsyncThunk(
-  "cart/updatCartItem",
-  async ({ userId, productId, quntity }) => {
-    const result = axios.put("http://localhost:9001/api/shopping/update-cart", {
-      userId,
-      productId,
-      quntity,
-    });
-    return result.data;
+    console.log(quantity);
+    return response.data;
   }
 );
 const shoppingcartSlice = createSlice({
@@ -67,7 +64,8 @@ const shoppingcartSlice = createSlice({
       })
       .addCase(addcart.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cartItems = action.payload.data;
+        state.cartItems = action?.payload.data;
+        console.log(action?.payload);
       })
       .addCase(addcart.rejected, (state) => {
         state.isLoading = false;
@@ -109,4 +107,4 @@ const shoppingcartSlice = createSlice({
   },
 });
 
-export default shoppingcartSlice.reducer
+export default shoppingcartSlice.reducer;

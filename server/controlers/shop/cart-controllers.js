@@ -3,9 +3,9 @@ const Cart = require("../../models/Cart");
 
 const addcart = async (req, res) => {
   try {
-    const { userId, productId, quntity } = req.body;
+    const { userId, productId, quantity } = req.body;
 
-    if (!userId || !productId || quntity <= 0) {
+    if (!userId || !productId || quantity <= 0) {
       return res.status(400).json({
         success: false,
         message: "Invalid data provided!",
@@ -16,23 +16,24 @@ const addcart = async (req, res) => {
     if (!product) {
       return res.status(404).json({
         success: false,
-        message: "Product Not Founnd!",
+        message: "Product Not Found!",
       });
     }
 
     let cart = await Cart.findOne({ userId });
 
     if (!cart) {
-      cart = new cart({ userId, items: [] });
+      cart = new Cart({ userId, items: [] });
     }
 
-    const findcurrentindex = cart.items.findIndex((item) => {
-      item.productId.toString() === productId;
-    });
+    const findcurrentindex = cart.items.findIndex(
+      (item) => item.productId.toString() === productId
+    );
+
     if (findcurrentindex === -1) {
-      cart.items.push({ productId, quntity });
+      cart.items.push({ productId, quantity });
     } else {
-      cart.items[findcurrentindex].quntity += quntity;
+      cart.items[findcurrentindex].quantity += quantity;
     }
 
     await cart.save();
@@ -44,7 +45,7 @@ const addcart = async (req, res) => {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: "error occuered",
+      message: "Error occurred",
     });
   }
 };
@@ -56,7 +57,7 @@ const fetchcartitems = async (req, res) => {
     if (!userId) {
       return res.status(400).json({
         success: false,
-        message: "user Id not Found!",
+        message: "User ID not Found!",
       });
     }
     const cart = await Cart.findOne({ userId }).populate({
@@ -71,6 +72,7 @@ const fetchcartitems = async (req, res) => {
       });
     }
 
+    // Filter valid items
     const validitems = cart.items.filter(
       (productItem) => productItem.productId
     );
@@ -86,29 +88,30 @@ const fetchcartitems = async (req, res) => {
       title: item.productId.title,
       price: item.productId.price,
       salePrice: item.productId.salePrice,
-      quntity: item.quntity,
+      quantity: item.quantity,
     }));
-    return res.status(200).json({
+
+    res.status(200).json({
       success: true,
       data: {
         ...cart._doc,
-        item: populateCartitems,
+        items: populateCartitems,
       },
     });
   } catch (error) {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: "error occuered",
+      message: "Error occurred",
     });
   }
 };
 
 const updatecartitems = async (req, res) => {
   try {
-    const { userId, productId, quntity } = req.body;
+    const { userId, productId, quantity } = req.body;
 
-    if (!userId || !productId || quntity <= 0) {
+    if (!userId || !productId || quantity <= 0) {
       return res.status(400).json({
         success: false,
         message: "Invalid data provided!",
@@ -122,16 +125,19 @@ const updatecartitems = async (req, res) => {
         message: "Cart not Found!",
       });
     }
+
     const findcurrentindex = cart.items.findIndex((item) => {
-      item.productId.toString() === productId;
+      return item.productId.toString() === productId; // Fixed: Added return statement
     });
+
     if (findcurrentindex === -1) {
       return res.status(404).json({
         success: false,
         message: "Cart item is not Found!",
       });
     }
-    cart.items[findcurrentindex].quntity = quntity;
+
+    cart.items[findcurrentindex].quantity = quantity;
     await cart.save();
 
     await cart.populate({
@@ -139,27 +145,32 @@ const updatecartitems = async (req, res) => {
       select: "image title price salePrice",
     });
 
+    // Filter valid items
+    const validitems = cart.items.filter(
+      (productItem) => productItem.productId
+    );
+
     const populateCartitems = validitems.map((item) => ({
       productId: item.productId ? item.productId._id : null,
       image: item.productId ? item.productId.image : null,
-      title: item.productId ? item.productId.title : "product not found!",
+      title: item.productId ? item.productId.title : "Product not found!",
       price: item.productId ? item.productId.price : null,
       salePrice: item.productId ? item.productId.salePrice : null,
-      quntity: item.quntity,
+      quantity: item.quantity,
     }));
 
     return res.status(200).json({
       success: true,
       data: {
         ...cart._doc,
-        item: populateCartitems,
+        items: populateCartitems,
       },
     });
   } catch (error) {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: "error occuered",
+      message: "Error occurred",
     });
   }
 };
@@ -184,35 +195,40 @@ const deletecartitems = async (req, res) => {
         message: "Cart not Found!",
       });
     }
-    cart.items = cart.items.filter((item) => {
-      item.productId._id.toString() !== productId;
-    });
+
+    cart.items = cart.items.filter(
+      (item) => item.productId._id.toString() !== productId
+    );
     await cart.save();
+
+  
+
     await cart.populate({
       path: "items.productId",
       select: "image title price salePrice",
     });
-    const populateCartitems = validitems.map((item) => ({
+
+    const populateCartitems = cart.items.map((item) => ({
       productId: item.productId ? item.productId._id : null,
       image: item.productId ? item.productId.image : null,
-      title: item.productId ? item.productId.title : "product not found!",
+      title: item.productId ? item.productId.title : "Product not found",
       price: item.productId ? item.productId.price : null,
       salePrice: item.productId ? item.productId.salePrice : null,
-      quntity: item.quntity,
+      quantity: item.quantity,
     }));
 
     return res.status(200).json({
       success: true,
       data: {
         ...cart._doc,
-        item: populateCartitems,
+        items: populateCartitems,
       },
     });
   } catch (error) {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: "error occuered",
+      message: "Error occurred",
     });
   }
 };
