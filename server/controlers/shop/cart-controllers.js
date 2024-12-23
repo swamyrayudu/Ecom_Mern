@@ -146,7 +146,7 @@ const updatecartitems = async (req, res) => {
     });
 
 
-    const populateCartitems = cart.items.map((item) => ({
+    const populateCartItems = cart.items.map((item) => ({
       productId: item.productId ? item.productId._id : null,
       image: item.productId ? item.productId.image : null,
       title: item.productId ? item.productId.title : "Product not found",
@@ -159,7 +159,7 @@ const updatecartitems = async (req, res) => {
       success: true,
       data: {
         ...cart._doc,
-        items: populateCartitems,
+        items: populateCartItems,
       },
     });
   } catch (error) {

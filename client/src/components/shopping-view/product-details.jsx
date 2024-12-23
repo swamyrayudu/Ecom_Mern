@@ -2,23 +2,52 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchgetProductDeatails } from "@/store/shopslice/productSlice";
+import { addcart, fetchcartItems } from "@/store/shopslice/cartSlice";
 import Load from "../loading/load";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ProductDetails() {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const {toast}=useToast()
   const { productDetails: product, isLoading } = useSelector(
     (state) => state.shopproducts
   );
+  const user = useSelector((state) => state.auth.user); // Assuming user info is in auth slice
+
+  const handleaddTocart = (productId) => {
+    console.log(productId);
+    if (!user) {
+      toast.error("Please log in to add items to the cart.");
+      return;
+    }
+
+    dispatch(
+      addcart({ userId: user.id, productId, quantity: 1 })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchcartItems(user.id));
+        toast({
+          title:'product add to cart'
+        })
+      } else {
+        toast({
+          title:'some error to add the product'
+        })
+      }
+    });
+  };
 
   useEffect(() => {
-    dispatch(fetchgetProductDeatails(id));
+    if (id) {
+      dispatch(fetchgetProductDeatails(id));
+    }
   }, [dispatch, id]);
 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center w-full h-screen">
-        <Load/>
+        <Load />
       </div>
     );
   }
@@ -83,7 +112,10 @@ export default function ProductDetails() {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mt-4">
-            <button className="w-full sm:w-1/2 bg-red-500 hover:bg-red-600 text-white py-2 sm:py-3 rounded-md shadow-md">
+            <button
+              onClick={() => handleaddTocart(product._id)}
+              className="w-full sm:w-1/2 bg-red-500 hover:bg-red-600 text-white py-2 sm:py-3 rounded-md shadow-md"
+            >
               ADD TO CART
             </button>
             <button className="w-full sm:w-1/2 border border-gray-300 hover:bg-gray-100 text-gray-600 py-2 sm:py-3 rounded-md">
