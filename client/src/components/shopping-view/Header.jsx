@@ -133,12 +133,14 @@ export default function ShoppingHeader() {
 
       {/* Mobile menu */}
       <Sheet>
+        <SheetDescription></SheetDescription>
         <SheetTrigger asChild>
           <Button className="lg:hidden w-10 h-10 rounded-md">
             <Menu className="w-6 h-6" />
             <span className="sr-only">Toggle menu</span>
           </Button>
         </SheetTrigger>
+        
         <SheetContent side="left" className="bg-white w-full max-w-xs">
           <SheetHeader>
             <SheetTitle className="text-black text-xl font-semibold">Menu</SheetTitle>
