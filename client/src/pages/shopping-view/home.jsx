@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { addcart, fetchcartItems } from "@/store/shopslice/cartSlice";
 import { fetchallfilteredproducts } from "@/store/shopslice/productSlice";
 import { useToast } from "@/hooks/use-toast";
+import Footer from "./Homepagefooter";
 
 export default function ShoppingHomePage() {
   const categories = [
@@ -202,6 +203,9 @@ export default function ShoppingHomePage() {
               />
             ))}
         </div>
+      </div>
+      <div>
+        <Footer/>
       </div>
     </div>
   );
