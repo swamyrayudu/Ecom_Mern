@@ -7,7 +7,7 @@ import {
   User,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Sheet,
   SheetContent,
@@ -32,6 +32,7 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Logoutuser } from "@/store/authSlice";
 import CartWrapper from "./cart-wrapper";
 import { fetchcartItems } from "@/store/shopslice/cartSlice";
+import { Label } from "../ui/label";
 
 export default function ShoppingHeader() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -39,27 +40,18 @@ export default function ShoppingHeader() {
 
   const dispatch = useDispatch();
   const [openCart, setOpenCart] = useState(false);
+  // const navigate = useNavigate();
 
-  // Logout function
-  function handelLogOut() {
-    dispatch(Logoutuser());
-  }
-
-  // Fetch cart items when user is authenticated and user.id changes
-  useEffect(() => {
-      dispatch(fetchcartItems(user.id));
-  }, [dispatch]); // Runs only when user.id changes
-  // console.log(cartItems?.);
-
-  // Menu items for the header
   function MenuItems() {
+    
+
     return (
       <nav className="flex flex-col lg:flex-row lg:items-center gap-6">
         {shoppingViewHeaderMenuItems.map((menuItem) => (
           <Link
-            key={menuItem.id}
             to={menuItem.path}
-            className="text-gray-800 hover:text-red-600 text-sm font-medium transition-colors"
+            key={menuItem.id}
+            className='text-sm font-medium cursor-pointer'
           >
             {menuItem.label}
           </Link>
@@ -68,12 +60,23 @@ export default function ShoppingHeader() {
     );
   }
 
-  // Right side content (Cart and user menu)
+  function handelLogOut() {
+    dispatch(Logoutuser());
+  }
+
+  useEffect(() => {
+    dispatch(fetchcartItems(user.id));
+  }, [dispatch]);
+
   function Rightside() {
     return (
       <div className="flex lg:items-center lg:flex-row flex-col gap-4">
         <Sheet open={openCart} onOpenChange={() => setOpenCart(false)}>
-          <Button onClick={() => setOpenCart(true)} variant="outline" size="icon">
+          <Button
+            onClick={() => setOpenCart(true)}
+            variant="outline"
+            size="icon"
+          >
             <ShoppingCart className="w-6 h-6" />
             <span className="sr-only">User Cart</span>
           </Button>
@@ -118,7 +121,6 @@ export default function ShoppingHeader() {
 
   return (
     <div className="w-full h-[65px] bg-white flex items-center justify-between px-6 shadow-sm border-b border-gray-200 ">
-      {/* Ecommm Logo Section */}
       <div className="flex items-center">
         <Link to="/shopping/home" className="flex items-center space-x-2">
           <ShoppingBag className="w-6 h-6 text-red-600" />
@@ -126,12 +128,10 @@ export default function ShoppingHeader() {
         </Link>
       </div>
 
-      {/* Menu for larger screens */}
       <div className="hidden lg:flex lg:ml-auto">
         <MenuItems />
       </div>
 
-      {/* Mobile menu */}
       <Sheet>
         <SheetDescription></SheetDescription>
         <SheetTrigger asChild>
@@ -140,10 +140,12 @@ export default function ShoppingHeader() {
             <span className="sr-only">Toggle menu</span>
           </Button>
         </SheetTrigger>
-        
+
         <SheetContent side="left" className="bg-white w-full max-w-xs">
           <SheetHeader>
-            <SheetTitle className="text-black text-xl font-semibold">Menu</SheetTitle>
+            <SheetTitle className="text-black text-xl font-semibold">
+              Menu
+            </SheetTitle>
           </SheetHeader>
           <div className="mt-4">
             <MenuItems />
@@ -152,7 +154,6 @@ export default function ShoppingHeader() {
         </SheetContent>
       </Sheet>
 
-      {/*larger screens only icon right */}
       {isAuthenticated && (
         <div className="hidden lg:block text-gray-800 ml-6">
           <Rightside />

@@ -121,35 +121,15 @@ export const addProductFormElements = [
       path: "/shopping/listing",
     },
     {
-      id: "men",
-      label: "Men",
-      path: "/shopping/listing",
-    },
-    {
-      id: "women",
-      label: "Women",
-      path: "/shopping/listing",
-    },
-    {
-      id: "kids",
-      label: "Kids",
-      path: "/shopping/listing",
-    },
-    {
-      id: "footwear",
-      label: "Footwear",
-      path: "/shopping/listing",
-    },
-    {
-      id: "accessories",
-      label: "Accessories",
-      path: "/shopping/listing",
+      id: "account",
+      label: "Account",
+      path: "/shopping/account",
     },
     {
       id: "search",
       label: "Search",
       path: "/shopping/search",
-    },
+    }
   ];
   
   export const categoryOptionsMap = {

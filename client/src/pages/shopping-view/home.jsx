@@ -1,8 +1,11 @@
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { Card, CardContent } from "@/components/ui/card";
-import { fetchallfilteredproducts } from "@/store/shopslice/productSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addcart, fetchcartItems } from "@/store/shopslice/cartSlice";
+import { fetchallfilteredproducts } from "@/store/shopslice/productSlice";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ShoppingHomePage() {
   const categories = [
@@ -67,13 +70,48 @@ export default function ShoppingHomePage() {
   ];
 
   const dispatch = useDispatch();
-  const {productList} = useSelector(state=> state.shopproducts)
+  const { productList } = useSelector((state) => state.shopproducts);
+  const { user } = useSelector((state) => state.auth);
+  const {toast} = useToast()
+  const navigate = useNavigate();
 
-  useEffect(()=>{
-    dispatch(fetchallfilteredproducts({filterparams:{},sortparams:'price-lowtohigh'}))
-  },[dispatch])
+  const handelnavegatecategory = (section, getcuurentItem) => {
+    sessionStorage.removeItem("filter");
+    const currentfilter = {
+      [section]: [getcuurentItem.id],
+    };
+    sessionStorage.setItem("filter", JSON.stringify(currentfilter));
+    navigate("/shopping/listing");
+  };
 
-  console.log(productList);
+  const handleProductCart = (productId) => {
+    dispatch(addcart({ userId: user?.id, productId, quantity: 1 })).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchcartItems(user?.id));
+        toast({
+          title: "Product Added to Cart",
+          description: "You can view it in your cart.",
+          status: "success",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Could not add the product to your cart. Try again.",
+          status: "error",
+        });
+      }
+    });
+  };
+
+  useEffect(() => {
+    dispatch(
+      fetchallfilteredproducts({
+        filterparams: {},
+        sortparams: "price-lowtohigh",
+      })
+    );
+  }, [dispatch]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="relative w-full h-[600px] overflow-hidden">
@@ -83,16 +121,18 @@ export default function ShoppingHomePage() {
           className="w-full h-[600px] object-cover"
         />
       </div>
+
       <div className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
             Shop By Category
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {categories.map((item, index) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {categories.map((item) => (
               <Card
-                key={index}
+                key={item.id}
                 className="group cursor-pointer shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
+                onClick={() => handelnavegatecategory("category", item)}
               >
                 <div className="flex flex-col items-center p-4">
                   <div className="relative h-28 w-28">
@@ -120,11 +160,12 @@ export default function ShoppingHomePage() {
           <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
             Shop By Brand
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
-            {brand.map((item, index) => (
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {brand.map((item) => (
               <Card
-                key={index}
+                key={item.id}
                 className="group cursor-pointer shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
+                onClick={() => handelnavegatecategory("brand", item)}
               >
                 <div className="flex flex-col items-center p-4">
                   <div className="relative h-28 w-28">
@@ -146,16 +187,20 @@ export default function ShoppingHomePage() {
           </div>
         </div>
       </div>
+
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
-          feature products
+          Featured Products
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {
-                productList && productList.length > 0 ?
-                productList.map((productItems,index)=> <ShoppingProductTile key={index} product={productItems}/>)
-                : null
-              }
+          {productList &&
+            productList.map((productItem, index) => (
+              <ShoppingProductTile
+                key={index}
+                handleProductCart={handleProductCart}
+                product={productItem}
+              />
+            ))}
         </div>
       </div>
     </div>

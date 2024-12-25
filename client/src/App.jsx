@@ -22,6 +22,7 @@ import { checkAction } from "./store/authSlice";
 // import { Skeleton } from "@/components/ui/skeleton"
 import Load from "./components/loading/load";
 import ProductDetails from "./components/shopping-view/product-details";
+import Search from "./pages/shopping-view/search";
 
 
 function App() {
@@ -86,6 +87,7 @@ function App() {
             <Route path="checkout" element={<ShoppingCheckout />} />
             <Route path="listing" element={<ShoppingListing />} />
             <Route path="details/:id" element={<ProductDetails/>} />
+            <Route path="search" element={<Search/>}/>
           </Route>
 
           <Route path="*" element={<Notfound />} />

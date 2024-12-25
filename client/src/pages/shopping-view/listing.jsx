@@ -73,7 +73,9 @@ export default function ShoppingListing() {
       if (data?.payload?.success) {
         dispatch(fetchcartItems(user?.id));
         toast({
-          title:'Product add to Cart'
+          title:'Product add to Cart',
+          description: "You can view it in your cart.",
+          status: "success",
         })
       }
     });
