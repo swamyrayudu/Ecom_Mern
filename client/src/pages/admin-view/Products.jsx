@@ -120,7 +120,7 @@ export default function AdminProducts() {
         </div>
 
         {/* Scrollable Product Grid with hidden scrollbar */}
-        <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 h-[calc(100vh-10rem)] overflow-y-scroll scrollbar-hidden">
+        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 h-[calc(100vh-10rem)] overflow-y-scroll scrollbar-hidden">
           {productList && productList.length > 0
             ? productList.map((addproduct) => (
                 <ProductTile

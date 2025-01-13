@@ -17,53 +17,49 @@ export default function ShoppingProductTile({
   };
 
   return (
-    <Card className="w-full max-w-sm mx-auto">
+    <Card className="group cursor-pointer shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105">
       <div
         onClick={() => navigateToDetails(product?._id)}
         className="cursor-pointer"
       >
         <div className="relative">
           <img
-            className="w-full h-[300px] object-cover rounded-t-lg"
+            className="w-full h-[300px] object-cover"
             src={product?.image}
             alt={product?.title}
           />
           {product?.salePrice > 0 && (
-            <Badge className="absolute top-2 left-2">
+            <Badge className="absolute top-2 left-2 bg-red-500 text-white">
               Sale: {product?.totalStock}
             </Badge>
           )}
         </div>
         <CardContent className="p-4">
-          <h2 className="text-xl font-bold mb-2">{product?.title}</h2>
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-muted-foreground">
-              {product?.category}
-            </span>
-            <span className="text-sm text-muted-foreground">
-              {product?.brand}
-            </span>
+          <h2 className="text-xl font-bold mb-2 text-gray-800">{product?.title}</h2>
+          <div className="flex justify-between items-center mb-2 text-gray-600">
+            <span className="text-sm">{product?.category}</span>
+            <span className="text-sm">{product?.brand}</span>
           </div>
           <div className="flex justify-between items-center mb-2">
             <span
               className={`${
-                product?.salePrice > 0 ? "line-through" : ""
-              } text-lg font-semibold text-primary`}
+                product?.salePrice > 0 ? "line-through text-gray-500" : "text-primary"
+              } text-lg font-semibold`}
             >
               ₹{product?.price}
             </span>
             {product?.salePrice > 0 && (
-              <span className="text-lg font-semibold text-primary">
+              <span className="text-lg font-semibold text-red-500">
                 ₹{product?.salePrice}
               </span>
             )}
           </div>
         </CardContent>
       </div>
-      <CardFooter>
+      <CardFooter className="p-4">
         <Button
           onClick={() => handleProductCart(product?._id)}
-          className="w-full bg-red-500 hover:bg-red-600 font-medium"
+          className="w-full bg-red-500 hover:bg-red-600 text-white font-medium"
         >
           Add to Cart
         </Button>

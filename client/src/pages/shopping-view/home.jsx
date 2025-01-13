@@ -115,11 +115,11 @@ export default function ShoppingHomePage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="relative w-full h-[600px] overflow-hidden">
+      <div className="relative w-full overflow-hidden sm:h-[300px] md:h-[400px] lg:h-[500px]">
         <img
           src="https://raw.githubusercontent.com/sangammukherjee/mern-ecommerce-2024/refs/heads/master/client/src/assets/banner-1.webp"
           alt="Banner"
-          className="w-full h-[600px] object-cover"
+          className="w-full sm:h-[300px] md:h-[400px] lg:h-[500px] object-cover"
         />
       </div>
 

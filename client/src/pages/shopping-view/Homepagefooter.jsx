@@ -62,7 +62,7 @@ export default function Footer() {
             </h3>
             <div className="flex space-x-4 mb-4">
               <Link
-                href="https://facebook.com"
+                to="https://facebook.com"
                 target="_blank"
                 rel="noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
@@ -70,7 +70,7 @@ export default function Footer() {
                 <i className="fa-brands fa-facebook text-xl"></i>
               </Link>
               <Link
-                href="https://instagram.com"
+                to="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
@@ -78,7 +78,7 @@ export default function Footer() {
                 <i className="fa-brands fa-instagram text-xl"></i>
               </Link>
               <Link
-                href="https://twitter.com"
+                to="https://twitter.com"
                 target="_blank"
                 rel="noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
@@ -86,7 +86,7 @@ export default function Footer() {
                 <i className="fa-brands fa-x-twitter text-xl"></i>
               </Link>
               <Link
-                href="https://linkedin.com"
+                to="https://www.linkedin.com/in/rayudu-veera-venkata-swamy"
                 target="_blank"
                 rel="noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
