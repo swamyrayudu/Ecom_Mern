@@ -11,17 +11,13 @@ export default function ShoppingProductTile({
 }) {
   const navigate = useNavigate();
 
-  // Local function for navigation
   const navigateToDetails = (productId) => {
     navigate(`/shopping/details/${productId}`, { state: { product } });
   };
 
   return (
     <Card className="group cursor-pointer shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105">
-      <div
-        onClick={() => navigateToDetails(product?._id)}
-        className="cursor-pointer"
-      >
+      <div onClick={() => navigateToDetails(product?._id)} className="cursor-pointer">
         <div className="relative">
           <img
             className="w-full h-[300px] object-cover"

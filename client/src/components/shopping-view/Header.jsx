@@ -43,15 +43,13 @@ export default function ShoppingHeader() {
   // const navigate = useNavigate();
 
   function MenuItems() {
-    
-
     return (
-      <nav className="flex flex-col lg:flex-row lg:items-center gap-6">
+      <nav className="flex flex-col lg:flex-row lg:items-center gap-8">
         {shoppingViewHeaderMenuItems.map((menuItem) => (
           <Link
             to={menuItem.path}
             key={menuItem.id}
-            className='text-sm font-medium cursor-pointer'
+            className='text-base font-semibold cursor-pointer hover:text-red-600 transition-colors'
           >
             {menuItem.label}
           </Link>
@@ -70,12 +68,13 @@ export default function ShoppingHeader() {
 
   function Rightside() {
     return (
-      <div className="flex lg:items-center lg:flex-row flex-col gap-4">
+      <div className="flex lg:items-center lg:flex-row flex-col gap-6">
         <Sheet open={openCart} onOpenChange={() => setOpenCart(false)}>
           <Button
             onClick={() => setOpenCart(true)}
             variant="outline"
             size="icon"
+            className="hover:bg-gray-100 transition-colors"
           >
             <ShoppingCart className="w-6 h-6" />
             <span className="sr-only">User Cart</span>
@@ -90,7 +89,7 @@ export default function ShoppingHeader() {
         </Sheet>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Avatar className="bg-black">
+            <Avatar className="bg-gray-800">
               <AvatarFallback className="bg-red-500 hover:bg-red-600 text-white font-extrabold">
                 {user.username[0].toUpperCase()}
               </AvatarFallback>
@@ -120,11 +119,11 @@ export default function ShoppingHeader() {
   }
 
   return (
-    <div className="w-full h-[65px] bg-white flex items-center justify-between px-6 shadow-sm border-b border-gray-200 ">
+    <div className="w-full h-[70px] bg-white flex items-center justify-between px-8 shadow-md border-b border-gray-300">
       <div className="flex items-center">
-        <Link to="/shopping/home" className="flex items-center space-x-2">
-          <ShoppingBag className="w-6 h-6 text-red-600" />
-          <span className="text-black font-bold text-lg">ShopEase</span>
+        <Link to="/shopping/home" className="flex items-center space-x-3">
+          <ShoppingBag className="w-7 h-7 text-red-600" />
+          <span className="text-black font-bold text-xl">ShopEase</span>
         </Link>
       </div>
 
@@ -135,7 +134,7 @@ export default function ShoppingHeader() {
       <Sheet>
         <SheetDescription></SheetDescription>
         <SheetTrigger asChild>
-          <Button className="lg:hidden w-10 h-10 rounded-md">
+          <Button className="lg:hidden w-12 h-12 rounded-md">
             <Menu className="w-6 h-6" />
             <span className="sr-only">Toggle menu</span>
           </Button>

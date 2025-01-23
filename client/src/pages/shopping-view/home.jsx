@@ -73,7 +73,7 @@ export default function ShoppingHomePage() {
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.shopproducts);
   const { user } = useSelector((state) => state.auth);
-  const {toast} = useToast()
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   const handelnavegatecategory = (section, getcuurentItem) => {
@@ -205,7 +205,7 @@ export default function ShoppingHomePage() {
         </div>
       </div>
       <div>
-        <Footer/>
+        <Footer />
       </div>
     </div>
   );

@@ -9,33 +9,32 @@ import { useToast } from "@/hooks/use-toast";
 export default function ProductDetails() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const {toast}=useToast()
+  const { toast } = useToast();
   const { productDetails: product, isLoading } = useSelector(
     (state) => state.shopproducts
   );
-  const user = useSelector((state) => state.auth.user); // Assuming user info is in auth slice
+  const user = useSelector((state) => state.auth.user);
 
   const handleaddTocart = (productId) => {
-    console.log(productId);
     if (!user) {
       toast.error("Please log in to add items to the cart.");
       return;
     }
 
-    dispatch(
-      addcart({ userId: user.id, productId, quantity: 1 })
-    ).then((data) => {
-      if (data?.payload?.success) {
-        dispatch(fetchcartItems(user.id));
-        toast({
-          title:'product add to cart'
-        })
-      } else {
-        toast({
-          title:'some error to add the product'
-        })
+    dispatch(addcart({ userId: user.id, productId, quantity: 1 })).then(
+      (data) => {
+        if (data?.payload?.success) {
+          dispatch(fetchcartItems(user.id));
+          toast({
+            title: "Product added to cart",
+          });
+        } else {
+          toast({
+            title: "Error adding product to cart",
+          });
+        }
       }
-    });
+    );
   };
 
   useEffect(() => {
