@@ -1,6 +1,7 @@
 import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Orders from "@/components/shopping-view/orders";
+import Address from "@/components/shopping-view/address";
 
 export default function ShoppingAccount() {
   return (
@@ -13,20 +14,20 @@ export default function ShoppingAccount() {
         />
       </div>
       <div className=" container mx-auto grid grid-cols-1 gap-8 py-8">
-          <div className="flex flex-col rounded-lg border bg-background p-6 shadow-md">
-              <Tabs defaultValue="orders">
-                  <TabsList>
-                    <TabsTrigger value='orders'>Orders</TabsTrigger>
-                    <TabsTrigger value='address'>Address</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value='orders'>
-                      
-                  </TabsContent>
-                  <TabsContent value='address'>
-
-                  </TabsContent>
-              </Tabs>
-          </div>
+        <div className="flex flex-col rounded-lg border bg-background p-6 shadow-md">
+          <Tabs defaultValue="orders">
+            <TabsList>
+              <TabsTrigger value="orders">Orders</TabsTrigger>
+              <TabsTrigger value="address">Address</TabsTrigger>
+            </TabsList>
+            <TabsContent value="orders">
+              <Orders />
+            </TabsContent>
+            <TabsContent value="address">
+              <Address />
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </div>
   );
