@@ -9,7 +9,6 @@ const initialState = {
 export const addNewAddress = createAsyncThunk(
   "/address/addnewaddress",
   async (formdata) => {
-    console.log(formdata);
     const result = await axios.post(
       "http://localhost:9001/api/shopping/address/add",
       formdata
@@ -77,28 +76,17 @@ const AddresSlice = createSlice({
         state.isLoading = false;
         state.AddressList = [];
       })
-      .addCase(updateaddress.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(updateaddress.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.AddressList = action.payload.data;
-      })
-      .addCase(updateaddress.rejected, (state) => {
-        state.isLoading = false;
-        state.AddressList = [];
-      })
-      .addCase(deleteaddress.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(deleteaddress.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.AddressList = action.payload.data;
-      })
-      .addCase(deleteaddress.rejected, (state) => {
-        state.isLoading = false;
-        state.AddressList = [];
-      });
+      // .addCase(deleteaddress.pending, (state) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(deleteaddress.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.AddressList = action.payload.data;
+      // })
+      // .addCase(deleteaddress.rejected, (state) => {
+      //   state.isLoading = false;
+      //   state.AddressList = [];
+      // })
   },
 });
 

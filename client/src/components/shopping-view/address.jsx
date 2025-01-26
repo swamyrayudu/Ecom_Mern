@@ -9,6 +9,7 @@ import {
   fetchalladdress,
 } from "@/store/addressSlice";
 import AddressCard from "./address-card";
+import { useToast } from "@/hooks/use-toast";
 
 const inisialAddressformdata = {
   address: "",
@@ -21,6 +22,8 @@ const inisialAddressformdata = {
 export default function Address() {
   const [formdata, setformdata] = useState(inisialAddressformdata);
   const dispatch = useDispatch();
+    const { toast } = useToast();
+  
   const { user } = useSelector((state) => state.auth);
   const { AddressList } = useSelector((state) => state.shoppingAddress);
 
@@ -40,11 +43,13 @@ export default function Address() {
   }
 
   function handledeleteaddress(getcurentaddress) {
-    console.log(getcurentaddress);
     dispatch(
-      deleteaddress({ userId: getcurentaddress.userId, addressId: getcurentaddress._id })
+      deleteaddress({ addressId: getcurentaddress._id ,userId: user?.id})
     ).then((data) => {
       if (data?.payload?.success) {
+        toast({
+          title: "deleted successfully",
+        });
         dispatch(fetchalladdress(user?.id));
       }
     });

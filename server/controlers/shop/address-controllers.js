@@ -98,12 +98,12 @@ const deleteAdress = async (req, res) => {
   try {
     const { userId, addressId } = req.params;
     if (!userId || !addressId) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
         message: "Invalid data provided",
       });
     }
-    const address = await Address.findByIdAndDelete({
+    const address = await Address.findOneAndDelete({
       _id: addressId,userId
     })
     if (!address) {

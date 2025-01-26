@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, CardContent } from "../ui/card";
-import { Label } from "../ui/label";
 import { Edit2, Trash2 } from "lucide-react";
 
 export default function AddressCard({ addressInfo, handledeleteaddress }) {
@@ -37,7 +36,10 @@ export default function AddressCard({ addressInfo, handledeleteaddress }) {
             <button className="flex items-center px-4 py-2 text-sm font-medium text-blue-700 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors">
               <Edit2 size={16} className="mr-2" /> Edit
             </button>
-            <button onClick={()=>handledeleteaddress(addressInfo)} className="flex items-center px-4 py-2 text-sm font-medium text-red-700 bg-red-100 rounded-lg hover:bg-red-200 transition-colors">
+            <button
+              onClick={() => handledeleteaddress(addressInfo)}
+              className="flex items-center px-4 py-2 text-sm font-medium text-red-700 bg-red-100 rounded-lg hover:bg-red-200 transition-colors"
+            >
               <Trash2 size={16} className="mr-2" /> Delete
             </button>
           </div>
