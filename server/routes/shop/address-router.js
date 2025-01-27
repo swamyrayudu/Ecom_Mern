@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post("/add", addAdress);
 router.get("/fetch/:userId", fetchAdress);
-router.get("/edit/:userId/:addressId", editAdress);
+router.put("/edit/:userId/:addressId", editAdress);
 router.delete("/delete/:userId/:addressId", deleteAdress);
 
 module.exports = router;
