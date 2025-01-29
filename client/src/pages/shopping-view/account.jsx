@@ -10,7 +10,7 @@ export default function ShoppingAccount() {
         <img
           src="https://github.com/sangammukherjee/mern-ecommerce-2024/blob/master/client/src/assets/account.jpg?raw=true"
           alt="image"
-          className=""
+          className="h-full w-full object-cover oveject-center"
         />
       </div>
       <div className=" container mx-auto grid grid-cols-1 gap-8 py-8">

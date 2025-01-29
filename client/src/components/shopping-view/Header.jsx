@@ -80,6 +80,7 @@ export default function ShoppingHeader() {
             <span className="sr-only">User Cart</span>
           </Button>
           <CartWrapper
+            setOpenCart={setOpenCart}
             cartItems={
               cartItems && cartItems.items && cartItems.items.length > 0
                 ? cartItems.items

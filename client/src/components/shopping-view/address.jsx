@@ -31,7 +31,14 @@ export default function Address() {
 
   const handleAddressManage = (event) => {
     event.preventDefault();
-
+    if(AddressList.length >= 3 && currentEditId === null) {
+      setFormData(initialAddressFormData);
+      toast({
+        title: "You can only have 3 addresses max!",
+        variant: "destructive",
+      });
+      return;
+    } 
     if (currentEditId !== null) {
       dispatch(
         updateaddress({
@@ -128,7 +135,7 @@ export default function Address() {
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
           Saved Addresses
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">
           {AddressList && AddressList.length > 0 ? (
             AddressList.map((address, index) => (
               <AddressCard
