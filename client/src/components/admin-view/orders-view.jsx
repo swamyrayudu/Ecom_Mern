@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
   Table,
   TableBody,
@@ -9,16 +8,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
+import AdminOrderDeatails from "./order-details";
 import { Dialog } from "../ui/dialog";
-import ShoppingorderDetails from "./Shopping-orderDetails";
 
-export default function ShoppingOrders() {
-  const [opendia, setopendia] = useState(false);
+export default function AdminOdersView() {
+  const [opendialog, setopendialog] = useState(false);
   return (
     <Card>
       <CardHeader>
-        <CardTitle> order histroy </CardTitle>
+        <CardTitle> All Orders </CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
@@ -39,9 +39,11 @@ export default function ShoppingOrders() {
             <TableCell>rejected</TableCell>
             <TableCell>$2999</TableCell>
             <TableCell>
-              <Dialog open={opendia} onOpenChange={setopendia}>
-                <Button onClick={() => setopendia(true)}>View Details</Button>
-                <ShoppingorderDetails/>
+              <Dialog open={opendialog} onOpenChange={setopendialog}>
+                <Button onClick={() => setopendialog(true)}>
+                  View Details
+                </Button>
+                <AdminOrderDeatails />
               </Dialog>
             </TableCell>
           </TableBody>

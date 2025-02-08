@@ -2,6 +2,7 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Orders from "@/components/shopping-view/orders";
 import Address from "@/components/shopping-view/address";
+import ShoppingOrders from "@/components/shopping-view/orders";
 
 export default function ShoppingAccount() {
   return (
@@ -21,7 +22,7 @@ export default function ShoppingAccount() {
               <TabsTrigger value="address">Address</TabsTrigger>
             </TabsList>
             <TabsContent value="orders">
-              <Orders />
+              <ShoppingOrders/>
             </TabsContent>
             <TabsContent value="address">
               <Address />

@@ -86,22 +86,24 @@ export default function ShoppingHomePage() {
   };
 
   const handleProductCart = (productId) => {
-    dispatch(addcart({ userId: user?.id, productId, quantity: 1 })).then((data) => {
-      if (data?.payload?.success) {
-        dispatch(fetchcartItems(user?.id));
-        toast({
-          title: "Product Added to Cart",
-          description: "You can view it in your cart.",
-          status: "success",
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: "Could not add the product to your cart. Try again.",
-          status: "error",
-        });
+    dispatch(addcart({ userId: user?.id, productId, quantity: 1 })).then(
+      (data) => {
+        if (data?.payload?.success) {
+          dispatch(fetchcartItems(user?.id));
+          toast({
+            title: "Product Added to Cart",
+            description: "You can view it in your cart.",
+            status: "success",
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: "Could not add the product to your cart. Try again.",
+            status: "error",
+          });
+        }
       }
-    });
+    );
   };
 
   useEffect(() => {
