@@ -22,6 +22,8 @@ import { checkAction } from "./store/authSlice";
 import Load from "./components/loading/load";
 import ProductDetails from "./components/shopping-view/product-details";
 import Search from "./pages/shopping-view/search";
+import PaypalReturnPage from "./components/shopping-view/paypal-return";
+import PaypalCancel from "./components/shopping-view/paypal-cancel";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -89,6 +91,9 @@ function App() {
             <Route path="listing" element={<ShoppingListing />} />
             <Route path="details/:id" element={<ProductDetails />} />
             <Route path="search" element={<Search />} />
+            <Route path="paypal-return" element={<PaypalReturnPage/>}/>
+            <Route path="paypal-cancel" element={<PaypalCancel/>}/>
+
           </Route>
 
 
