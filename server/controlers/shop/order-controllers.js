@@ -1,5 +1,6 @@
 const Orders = require("../../models/Order");
 const paypal = require("../../helpers/Paypal");
+const { model } = require("mongoose");
 
 const createorder = async (req, res) => {
   try {
@@ -54,7 +55,7 @@ const createorder = async (req, res) => {
           message: "error occured on createing payment",
         });
       } else {
-        const newlycreatedorder = Orders({
+        const newlycreatedorder = new Orders({
           userId,
           cartId,
           cartItems,
@@ -101,3 +102,5 @@ const caputurepayment = async (req, res) => {
     });
   }
 };
+
+module.exports ={createorder,caputurepayment}
