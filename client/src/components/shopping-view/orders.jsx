@@ -34,16 +34,18 @@ export default function ShoppingOrders() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableCell>123456</TableCell>
-            <TableCell>27/12/2009</TableCell>
-            <TableCell>rejected</TableCell>
-            <TableCell>$2999</TableCell>
-            <TableCell>
-              <Dialog open={opendia} onOpenChange={setopendia}>
-                <Button onClick={() => setopendia(true)}>View Details</Button>
-                <ShoppingorderDetails/>
-              </Dialog>
-            </TableCell>
+            <TableRow>
+              <TableCell>123456</TableCell>
+              <TableCell>27/12/2009</TableCell>
+              <TableCell>rejected</TableCell>
+              <TableCell>$2999</TableCell>
+              <TableCell>
+                <Dialog open={opendia} onOpenChange={setopendia}>
+                  <Button onClick={() => setopendia(true)}>View Details</Button>
+                  <ShoppingorderDetails />
+                </Dialog>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </CardContent>

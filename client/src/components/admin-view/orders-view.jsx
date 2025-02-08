@@ -34,18 +34,20 @@ export default function AdminOdersView() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableCell>123456</TableCell>
-            <TableCell>27/12/2009</TableCell>
-            <TableCell>rejected</TableCell>
-            <TableCell>$2999</TableCell>
-            <TableCell>
-              <Dialog open={opendialog} onOpenChange={setopendialog}>
-                <Button onClick={() => setopendialog(true)}>
-                  View Details
-                </Button>
-                <AdminOrderDeatails />
-              </Dialog>
-            </TableCell>
+            <TableRow>
+              <TableCell>123456</TableCell>
+              <TableCell>27/12/2009</TableCell>
+              <TableCell>rejected</TableCell>
+              <TableCell>$2999</TableCell>
+              <TableCell>
+                <Dialog open={opendialog} onOpenChange={setopendialog}>
+                  <Button onClick={() => setopendialog(true)}>
+                    View Details
+                  </Button>
+                  <AdminOrderDeatails />
+                </Dialog>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </CardContent>
