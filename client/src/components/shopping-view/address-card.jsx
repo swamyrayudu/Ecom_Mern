@@ -2,13 +2,23 @@ import React from "react";
 import { Card, CardContent } from "../ui/card";
 import { Edit2, Trash2 } from "lucide-react";
 
-export default function AddressCard({ addressInfo, handledeleteaddress, handleeditaddress }) {
+export default function AddressCard({
+  addressInfo,
+  handledeleteaddress,
+  handleeditaddress,
+  setcurrentaddress,
+}) {
   return (
-    <Card className="shadow-sm border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow bg-white">
+    <Card
+      onClick={setcurrentaddress ? () => setcurrentaddress(addressInfo) : null}
+      className="shadow-sm border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow bg-white"
+    >
       <CardContent className="p-5">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900">Address Details</h3>
+            <h3 className="text-lg font-semibold text-gray-900">
+              Address Details
+            </h3>
           </div>
           <div className="grid grid-cols-1 gap-2 text-sm text-gray-700">
             <div className="flex items-center">

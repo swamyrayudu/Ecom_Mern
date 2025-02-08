@@ -20,7 +20,7 @@ const initialAddressFormData = {
   notes: "",
 };
 
-export default function Address() {
+export default function Address({setcurrentaddress}) {
   const [formdata, setFormData] = useState(initialAddressFormData);
   const [currentEditId, setCurrentEditId] = useState(null);
   const dispatch = useDispatch();
@@ -139,6 +139,7 @@ export default function Address() {
           {AddressList && AddressList.length > 0 ? (
             AddressList.map((address, index) => (
               <AddressCard
+              setcurrentaddress={setcurrentaddress}
                 key={address._id || index}
                 addressInfo={address}
                 handledeleteaddress={handleDeleteAddress}

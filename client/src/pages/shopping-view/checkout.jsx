@@ -1,10 +1,19 @@
 import Address from "@/components/shopping-view/address";
 import CartItemContent from "@/components/shopping-view/cart-items-content";
-import React from "react";
-import { useSelector } from "react-redux";
+import { createOrder } from "@/store/shopslice/orderSlice";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ShoppingCheckout() {
   const { cartItems } = useSelector((state) => state.shoppingcart);
+  const { user } = useSelector((state) => state.auth);
+  const { approvalURL } = useSelector((state) => state.shoppingorder);
+
+  const [currenaddress, setcurrentaddress] = useState(null);
+  const [ispayment, setispayment] = useState(false);
+
+  const dispatch = useDispatch()
+
   const totalCartAmount =
     cartItems && cartItems.items && cartItems.items.length > 0
       ? cartItems.items.reduce(
@@ -18,6 +27,54 @@ export default function ShoppingCheckout() {
         )
       : 0;
 
+  function handlecreateorder() {
+    const orderdata = {
+      userId: user?.id,
+      cartId: cartItems._id,
+      cartItems: cartItems.items.map((singlecartItem) => ({
+        productId: singlecartItem?.productId,
+        image: singlecartItem?.image,
+        title: singlecartItem?.title,
+        price:
+          singlecartItem?.price > 0
+            ? singlecartItem?.salePrice
+            : singlecartItem?.price,
+        quantity: singlecartItem?.quantity,
+      })),
+      addressDetails: {
+        addressId: currenaddress?._id,
+        address: currenaddress?.address,
+        pincode: currenaddress?.pincode,
+        city: currenaddress?.city,
+        phone: currenaddress?.phone,
+        notes: currenaddress?.notes,
+      },
+      orderStatus: "pending",
+      paymentMethod: "paypal",
+      paymentId: "",
+      paymentStatus: "pending",
+      totalAmount: totalCartAmount,
+      orderDate: new Date(),
+      orderUpdate: new Date(),
+      payerId: "",
+    };
+    dispatch(createOrder(orderdata)).then((data)=>{
+        console.log(data);
+        if(data?.payload?.success){
+          setispayment(true)
+        }else{
+          setispayment(false)
+        }
+    })
+  }
+  if(approvalURL){
+    window.location.href = approvalURL
+  }
+
+  // console.log(currenaddress);
+
+
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -27,7 +84,9 @@ export default function ShoppingCheckout() {
           className="h-full w-full object-cover object-center"
           alt="Shopping Checkout"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div
+          className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+        >
           <h1 className="text-4xl font-bold text-white">Checkout</h1>
         </div>
       </div>
@@ -61,19 +120,18 @@ export default function ShoppingCheckout() {
                 </span>
               </div>
               {/* Pay Button */}
-              <button className="w-full mt-6 bg-red-500 text-white py-3 px-6 rounded-lg hover:bg-red-600 transition duration-300">
+              <button onClick={handlecreateorder} className="w-full mt-6 bg-red-500 text-white py-3 px-6 rounded-lg hover:bg-red-600 transition duration-300">
                 Pay {totalCartAmount.toFixed(2)}₹
               </button>
             </div>
           </div>
-
 
           {/* Delivery Address Section */}
           <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold mb-6 text-gray-800">
               Delivery Address
             </h2>
-            <Address />
+            <Address setcurrentaddress={setcurrentaddress} />
           </div>
         </div>
       </div>

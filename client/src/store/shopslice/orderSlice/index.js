@@ -39,3 +39,5 @@ const shoppingOrderSlice = createSlice({
       });
   },
 });
+
+export default shoppingOrderSlice.reducer;

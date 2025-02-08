@@ -31,7 +31,7 @@ const createorder = async (req, res) => {
       transactions: [
         {
           item_list: {
-            items: cartItems.map((item) => ({
+            items: cartItems.map(item => ({
               name: item.title,
               sku: item.productId,
               price: item.price.toFixed(2),
@@ -41,8 +41,8 @@ const createorder = async (req, res) => {
           },
           amount: {
             currency: "USD",
-            totalAmount: item.totalAmount,
-          },
+            total: totalAmount.toFixed(2),
+          },          
           description: "description",
         },
       ],
@@ -72,13 +72,13 @@ const createorder = async (req, res) => {
 
         await newlycreatedorder.save();
 
-        const apprrovalURl = paymentInfo.links.find(
+        const approvalURL = paymentInfo.links.find(
           (link) => link.rel === "approval_url"
-        ).href;
+        )?.href;
 
         res.status(201).json({
           success: true,
-          apprrovalURl,
+          approvalURL,
           orderId: newlycreatedorder._id,
         });
       }
