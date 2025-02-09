@@ -59,7 +59,7 @@ export default function ShoppingCheckout() {
       payerId: "",
     };
     dispatch(createOrder(orderdata)).then((data)=>{
-        console.log(data);
+        // console.log(data);
         if(data?.payload?.success){
           setispayment(true)
         }else{

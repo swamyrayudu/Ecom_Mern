@@ -18,6 +18,21 @@ export const createOrder = createAsyncThunk(
   }
 );
 
+export const captureOrder = createAsyncThunk(
+  "order/captureOrder",
+  async ({ orderId, paymentId, payerId }) => {
+    const response = await axios.post(
+      "http://localhost:9001/api/shopping/order/capture",
+      {
+        orderId,
+        paymentId,
+        payerId,
+      }
+    );
+    return response.data;
+  }
+);
+
 const shoppingOrderSlice = createSlice({
   name: "shoppingOrder",
   initialState,

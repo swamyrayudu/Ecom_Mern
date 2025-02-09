@@ -1,7 +1,7 @@
 const Orders = require("../../models/Order");
-const Orders = require("../../models/Cart");
+const Cart = require("../../models/Cart");
 const paypal = require("../../helpers/Paypal");
-const { model } = require("mongoose");
+
 
 const createorder = async (req, res) => {
   try {
