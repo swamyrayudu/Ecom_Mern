@@ -29,6 +29,8 @@ export default function Address({setcurrentaddress}) {
   const { user } = useSelector((state) => state.auth);
   const { AddressList } = useSelector((state) => state.shoppingAddress);
 
+
+  // console.log(AddressList);
   const handleAddressManage = (event) => {
     event.preventDefault();
     if(AddressList.length >= 3 && currentEditId === null) {

@@ -3,8 +3,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Orders from "@/components/shopping-view/orders";
 import Address from "@/components/shopping-view/address";
 import ShoppingOrders from "@/components/shopping-view/orders";
+import { useSelector } from "react-redux";
 
 export default function ShoppingAccount() {
+
   return (
     <div className="flex flex-col">
       <div className=" relative h-[350px] w-full overflow-hidden">

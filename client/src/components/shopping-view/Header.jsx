@@ -101,7 +101,9 @@ export default function ShoppingHeader() {
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <User className="w-6 h-6 mr-2" />
-              Profile
+              <Link to="profile">Profile</Link>
+              
+              
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>

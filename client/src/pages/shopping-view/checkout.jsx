@@ -1,5 +1,6 @@
 import Address from "@/components/shopping-view/address";
 import CartItemContent from "@/components/shopping-view/cart-items-content";
+import { useToast } from "@/hooks/use-toast";
 import { createOrder } from "@/store/shopslice/orderSlice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,10 +10,11 @@ export default function ShoppingCheckout() {
   const { user } = useSelector((state) => state.auth);
   const { approvalURL } = useSelector((state) => state.shoppingorder);
 
+  const { toast } = useToast();
   const [currenaddress, setcurrentaddress] = useState(null);
   const [ispayment, setispayment] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const totalCartAmount =
     cartItems && cartItems.items && cartItems.items.length > 0
@@ -28,6 +30,23 @@ export default function ShoppingCheckout() {
       : 0;
 
   function handlecreateorder() {
+    if (cartItems.items.length === 0) {
+      toast({
+        title: "Your Cart is Empty!",
+        description: "Please add some products to cart to proceed.",
+        variant: "destructive",
+      });
+      return
+    }
+
+    if (!currenaddress) {
+      toast({
+        title: "Address not selected!",
+        description: "Please select any address to proceed.",
+        variant: "destructive",
+      });
+      return;
+    }
     const orderdata = {
       userId: user?.id,
       cartId: cartItems._id,
@@ -49,7 +68,7 @@ export default function ShoppingCheckout() {
         phone: currenaddress?.phone,
         notes: currenaddress?.notes,
       },
-      orderStatus: "pending",
+      orderStatus: "canceled",
       paymentMethod: "paypal",
       paymentId: "",
       paymentStatus: "pending",
@@ -58,22 +77,19 @@ export default function ShoppingCheckout() {
       orderUpdate: new Date(),
       payerId: "",
     };
-    dispatch(createOrder(orderdata)).then((data)=>{
-        // console.log(data);
-        if(data?.payload?.success){
-          setispayment(true)
-        }else{
-          setispayment(false)
-        }
-    })
+    dispatch(createOrder(orderdata)).then((data) => {
+      if (data?.payload?.success) {
+        setispayment(true);
+      } else {
+        setispayment(false);
+      }
+    });
   }
-  if(approvalURL){
-    window.location.href = approvalURL
+  if (approvalURL) {
+    window.location.href = approvalURL;
   }
 
   // console.log(currenaddress);
-
-
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -84,9 +100,7 @@ export default function ShoppingCheckout() {
           className="h-full w-full object-cover object-center"
           alt="Shopping Checkout"
         />
-        <div
-          className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-        >
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <h1 className="text-4xl font-bold text-white">Checkout</h1>
         </div>
       </div>
@@ -118,9 +132,15 @@ export default function ShoppingCheckout() {
                 <span className="text-xl font-bold text-black">
                   {totalCartAmount.toFixed(2)}₹
                 </span>
+
+          
+          
               </div>
               {/* Pay Button */}
-              <button onClick={handlecreateorder} className="w-full mt-6 bg-red-500 text-white py-3 px-6 rounded-lg hover:bg-red-600 transition duration-300">
+              <button
+                onClick={handlecreateorder}
+                className="w-full mt-6 bg-red-500 text-white py-3 px-6 rounded-lg hover:bg-red-600 transition duration-300"
+              >
                 Pay {totalCartAmount.toFixed(2)}₹
               </button>
             </div>

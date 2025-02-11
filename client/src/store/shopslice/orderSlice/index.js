@@ -5,6 +5,8 @@ const initialState = {
   isLoading: false,
   approvalURL: null,
   orderId: null,
+  orderList: [],
+  orderDetails: null,
 };
 
 export const createOrder = createAsyncThunk(
@@ -33,6 +35,26 @@ export const captureOrder = createAsyncThunk(
   }
 );
 
+export const getallorders = createAsyncThunk(
+  "order/getallorders",
+  async (userId) => {
+    const response = await axios.get(
+      `http://localhost:9001/api/shopping/order/all/${userId}`
+    );
+    return response.data;
+  }
+);
+
+export const getOrderDetails = createAsyncThunk(
+  "order/getOrderDetails",
+  async (id) => {
+    const response = await axios.get(
+      `http://localhost:9001/api/shopping/order/details/${id}`
+    );
+    return response.data;
+  }
+);
+
 const shoppingOrderSlice = createSlice({
   name: "shoppingOrder",
   initialState,
@@ -55,6 +77,28 @@ const shoppingOrderSlice = createSlice({
         state.isLoading = false;
         state.approvalURL = null;
         state.orderId = null;
+      })
+      .addCase(getallorders.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getallorders.fulfilled, (state, action) => {
+        state.isLoading = true;
+        state.orderList = action.payload.data;
+      })
+      .addCase(getallorders.rejected, (state) => {
+        state.isLoading = true;
+        state.orderList = [];
+      })
+      .addCase(getOrderDetails.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOrderDetails.fulfilled, (state, action) => {
+        state.isLoading = true;
+        state.orderDetails = action.payload.data;
+      })
+      .addCase(getOrderDetails.rejected, (state) => {
+        state.isLoading = true;
+        state.orderDetails = [];
       });
   },
 });

@@ -3,7 +3,6 @@ import { Loader } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { captureOrder } from "@/store/shopslice/orderSlice";
-import { data } from "autoprefixer";
 
 export default function PaypalReturnPage() {
   const dispatch = useDispatch();

@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchgetProductDeatails } from "@/store/shopslice/productSlice";
 import { addcart, fetchcartItems } from "@/store/shopslice/cartSlice";
 import Load from "../loading/load";
 import { useToast } from "@/hooks/use-toast";
+import { FaHeart } from "react-icons/fa"; // Heart icon
+import { motion } from "framer-motion"; // For animations
 
 export default function ProductDetails() {
   const dispatch = useDispatch();
@@ -14,6 +16,7 @@ export default function ProductDetails() {
     (state) => state.shopproducts
   );
   const user = useSelector((state) => state.auth.user);
+  const [isLiked, setIsLiked] = useState(false); // State for like status
 
   const handleaddTocart = (productId) => {
     if (!user) {
@@ -35,6 +38,13 @@ export default function ProductDetails() {
         }
       }
     );
+  };
+
+  const handleWishlistClick = () => {
+    setIsLiked(!isLiked); // Toggle like status
+    toast({
+      title: isLiked ? "Removed from wishlist" : "Added to wishlist",
+    });
   };
 
   useEffect(() => {
@@ -117,9 +127,15 @@ export default function ProductDetails() {
             >
               ADD TO CART
             </button>
-            <button className="w-full sm:w-1/2 border border-gray-300 hover:bg-gray-100 text-gray-600 py-2 sm:py-3 rounded-md">
-              ♥ WISHLIST
-            </button>
+            <motion.button
+              onClick={handleWishlistClick}
+              className="w-full sm:w-1/2 border border-gray-300 hover:bg-gray-100 text-gray-600 py-2 sm:py-3 rounded-md flex items-center justify-center gap-2"
+              whileTap={{ scale: 1.2 }} // Animation on click
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <FaHeart className={`${isLiked ? "text-red-500" : "text-gray-600"}`} />
+              WISHLIST
+            </motion.button>
           </div>
         </div>
       </div>

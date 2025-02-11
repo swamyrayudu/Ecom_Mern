@@ -2,7 +2,6 @@ const Orders = require("../../models/Order");
 const Cart = require("../../models/Cart");
 const paypal = require("../../helpers/Paypal");
 
-
 const createorder = async (req, res) => {
   try {
     const {
@@ -111,7 +110,6 @@ const caputurepayment = async (req, res) => {
     order.paymentId = paymentId;
     order.payerId = payerId;
 
-
     const getCartId = order.cartId;
     await Cart.findByIdAndDelete(getCartId);
 
@@ -120,6 +118,7 @@ const caputurepayment = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Order confirmed",
+      data: order,
     });
   } catch (e) {
     console.log(e);
@@ -130,4 +129,59 @@ const caputurepayment = async (req, res) => {
   }
 };
 
-module.exports = { createorder, caputurepayment };
+const getAllorders = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const orders = await Orders.find({ userId });
+
+    if (!orders.length) {
+      return res.status(404).json({
+        success: false,
+        message: "No orders found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "All orders",
+      data: orders,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      message: "error occured",
+    });
+  }
+};
+
+const getAllOrderDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await Orders.findById(id);
+    if(!order) {
+      return res.status(404).json({
+        success: false,
+        message: "No order found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Order details",
+      data: order,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      message: "error occured",
+    });
+  }
+};
+
+module.exports = {
+  createorder,
+  caputurepayment,
+  getAllorders,
+  getAllOrderDetails,
+};
