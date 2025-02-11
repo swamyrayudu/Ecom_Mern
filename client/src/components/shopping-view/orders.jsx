@@ -13,7 +13,11 @@ import { Button } from "../ui/button";
 import { Dialog } from "../ui/dialog";
 import ShoppingorderDetails from "./Shopping-orderDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { getallorders } from "@/store/shopslice/orderSlice";
+import {
+  getallorders,
+  getOrderDetails,
+  restorderDetails,
+} from "@/store/shopslice/orderSlice";
 import { Badge } from "../ui/badge";
 
 export default function ShoppingOrders() {
@@ -21,12 +25,24 @@ export default function ShoppingOrders() {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { orderList } = useSelector((state) => state.shoppingorder);
+  const { orderList, orderDetails } = useSelector(
+    (state) => state.shoppingorder
+  );
+
+  function handlefetchorderdetails(getid) {
+    dispatch(getOrderDetails(getid));
+  }
+
   useEffect(() => {
     dispatch(getallorders(user?.id));
   }, [dispatch]);
 
-  console.log(orderList);
+  useEffect(() => {
+    if (orderDetails !== null) {
+      setopendia(true);
+    }
+  }, [orderDetails]);
+  console.log(orderDetails);
   return (
     <Card>
       <CardHeader>
@@ -64,11 +80,19 @@ export default function ShoppingOrders() {
                   </TableCell>
                   <TableCell>${order?.totalAmount}</TableCell>
                   <TableCell>
-                    <Dialog open={opendia} onOpenChange={setopendia}>
-                      <Button onClick={() => setopendia(true)}>
+                    <Dialog
+                      open={opendia}
+                      onOpenChange={() => {
+                        setopendia(false);
+                        dispatch(restorderDetails());
+                      }}
+                    >
+                      <Button
+                        onClick={() => handlefetchorderdetails(order._id)}
+                      >
                         View Details
                       </Button>
-                      <ShoppingorderDetails />
+                      <ShoppingorderDetails orderDetails={orderDetails} />
                     </Dialog>
                   </TableCell>
                 </TableRow>
