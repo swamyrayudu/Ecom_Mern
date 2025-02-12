@@ -21,12 +21,12 @@ import { useSearchParams } from "react-router-dom";
 import { addcart, fetchcartItems } from "@/store/shopslice/cartSlice";
 import { useToast } from "@/hooks/use-toast";
 
-
 export default function ShoppingListing() {
   const dispatch = useDispatch();
   const { productList, isLoading } = useSelector((state) => state.shopproducts);
   const { user } = useSelector((state) => state.auth);
-  const {toast} = useToast()
+  const { cartItems } = useSelector((state) => state.shoppingcart);
+  const { toast } = useToast();
   const [sort, setsort] = useState(null);
   const [filter, setfilter] = useState({});
   const [searchparam, setsearchparam] = useSearchParams({});
@@ -66,19 +66,39 @@ export default function ShoppingListing() {
     dispatch(fetchgetProductDeatails(productId));
   }
 
-  function handleProductCart(productId) {
-    dispatch(
-      addcart({ userId: user?.id, productId, quantity: 1 })
-    ).then((data) => {
-      if (data?.payload?.success) {
-        dispatch(fetchcartItems(user?.id));
-        toast({
-          title:'Product add to Cart',
-          description: "You can view it in your cart.",
-          status: "success",
-        })
+  function handleProductCart(productId, getotalStock) {
+    console.log(cartItems);
+
+    let getCartItems = cartItems.items || [];
+
+    if (getCartItems.length) {
+      const indexOfCurrentItem = getCartItems.findIndex(
+        (item) => item.productId === productId
+      );
+      if (indexOfCurrentItem > -1) {
+        const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+        if (getQuantity + 1 > getotalStock) {
+          toast({
+            title: `Only ${getQuantity} quantity can be added for this item`,
+            variant: "destructive",
+          });
+
+          return;
+        }
       }
-    });
+    }
+    dispatch(addcart({ userId: user?.id, productId, quantity: 1 })).then(
+      (data) => {
+        if (data?.payload?.success) {
+          dispatch(fetchcartItems(user?.id));
+          toast({
+            title: "Product add to Cart",
+            description: "You can view it in your cart.",
+            status: "success",
+          });
+        }
+      }
+    );
   }
 
   useEffect(() => {

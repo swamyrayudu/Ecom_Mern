@@ -81,7 +81,7 @@ export default function ShoppingProductTile({
           Out of Stock
         </Button> :
         <Button
-        onClick={() => handleProductCart(product?._id)}
+        onClick={() => handleProductCart(product?._id,product?.totalStock)}
         className="w-full bg-red-500 hover:bg-red-600 text-white font-medium"
       >
         Add to Cart

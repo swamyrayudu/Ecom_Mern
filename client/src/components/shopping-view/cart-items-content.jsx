@@ -6,11 +6,39 @@ import { deleteCartItem, updatCartItem } from "@/store/shopslice/cartSlice";
 import { useToast } from "@/hooks/use-toast";
 
 export default function CartItemContent({ cartItems }) {
+  const { cartItems: allCartItems } = useSelector((state) => state.shoppingcart);
   const dispatch = useDispatch();
+  const { productList } = useSelector((state) => state.shopproducts);
   const { user } = useSelector((state) => state.auth);
   const { toast } = useToast();
 
   function handleUpdateQuantity(getCartItem, actionType) {
+    if (actionType === "plus") {
+      let getCartItems = allCartItems.items || [];
+
+      if (getCartItems.length) {
+        const indexOfCurrentCartItem = getCartItems.findIndex(
+          (item) => item.productId === getCartItem?.productId
+        );
+
+        const getCurrentProductIndex = productList.findIndex(
+          (product) => product._id === getCartItem?.productId
+        );
+        const getTotalStock = productList[getCurrentProductIndex]?.totalStock;
+
+        if (indexOfCurrentCartItem > -1) {
+          const getQuantity = getCartItems[indexOfCurrentCartItem].quantity;
+          if (getQuantity + 1 > getTotalStock) {
+            toast({
+              title: `Only ${getTotalStock} quantity can be added for this item`,
+              variant: "destructive",
+            });
+            return;
+          }
+        }
+      }
+    }
+
     dispatch(
       updatCartItem({
         userId: user?.id,
@@ -49,7 +77,9 @@ export default function CartItemContent({ cartItems }) {
       />
 
       <div className="flex-1">
-        <h3 className="text-sm font-semibold text-gray-800">{cartItems?.title}</h3>
+        <h3 className="text-sm font-semibold text-gray-800">
+          {cartItems?.title}
+        </h3>
         <div className="flex items-center mt-1 gap-2">
           <Button
             onClick={() => handleUpdateQuantity(cartItems, "minus")}

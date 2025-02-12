@@ -15,13 +15,34 @@ export default function ProductDetails() {
   const { productDetails: product, isLoading } = useSelector(
     (state) => state.shopproducts
   );
+  const { cartItems } = useSelector((state) => state.shoppingcart);
+
   const user = useSelector((state) => state.auth.user);
   const [isLiked, setIsLiked] = useState(false); // State for like status
 
-  const handleaddTocart = (productId) => {
+  const handleaddTocart = (productId,getotalStock) => {
     if (!user) {
       toast.error("Please log in to add items to the cart.");
       return;
+    }
+
+    let getCartItems = cartItems.items || [];
+
+    if (getCartItems.length) {
+      const indexOfCurrentItem = getCartItems.findIndex(
+        (item) => item.productId === productId
+      );
+      if (indexOfCurrentItem > -1) {
+        const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+        if (getQuantity + 1 > getotalStock) {
+          toast({
+            title: `Only ${getQuantity} quantity can be added for this item`,
+            variant: "destructive",
+          });
+
+          return;
+        }
+      }
     }
 
     dispatch(addcart({ userId: user.id, productId, quantity: 1 })).then(
@@ -122,14 +143,12 @@ export default function ProductDetails() {
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mt-4">
             {product.totalStock === 0 ? (
-              <button
-                className="w-full sm:w-1/2 bg-red-500 hover:bg-red-600 text-white py-2 sm:py-3 rounded-md shadow-md opacity-65 cursor-not-allowed"
-              >
+              <button className="w-full sm:w-1/2 bg-red-500 hover:bg-red-600 text-white py-2 sm:py-3 rounded-md shadow-md opacity-65 cursor-not-allowed">
                 Out of Stock
               </button>
             ) : (
               <button
-                onClick={() => handleaddTocart(product._id)}
+                onClick={() => handleaddTocart(product._id,product.totalStock)}
                 className="w-full sm:w-1/2 bg-red-500 hover:bg-red-600 text-white py-2 sm:py-3 rounded-md shadow-md"
               >
                 ADD TO CART
