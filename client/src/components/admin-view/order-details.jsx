@@ -5,7 +5,11 @@ import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 import { useDispatch, useSelector } from "react-redux";
 import CommonForm from "../commen/form";
-import { getallordersAdmin, getOrderDetailsAdmin, updataorederstatus } from "@/store/orderSliceAdmin";
+import {
+  getallordersAdmin,
+  getOrderDetailsAdmin,
+  updataorederstatus,
+} from "@/store/orderSliceAdmin";
 
 const initailformdata = {
   Status: "",
@@ -25,14 +29,12 @@ export default function AdminOrderDeatails({ orderDetails }) {
         orderStatus: Status,
       })
     ).then((data) => {
-      if(data?.payload?.success) {
-        dispatch(getOrderDetailsAdmin(orderDetails?._id));  
-        dispatch(getallordersAdmin())
+      if (data?.payload?.success) {
+        dispatch(getOrderDetailsAdmin(orderDetails?._id));
+        dispatch(getallordersAdmin());
         setfordata(initailformdata);
       }
     });
-
-    console.log(formdata);
   }
   return (
     <>
@@ -71,7 +73,15 @@ export default function AdminOrderDeatails({ orderDetails }) {
                   className={`py-1 px-3 ${
                     orderDetails?.orderStatus === "confirmed"
                       ? "bg-green-500"
-                      : "bg-red-500"
+                      : orderDetails?.orderStatus === "pending"
+                      ? "bg-yellow-500"
+                      : orderDetails?.orderStatus === "shipping"
+                      ? "bg-blue-500"
+                      : orderDetails?.orderStatus === "delivered"
+                      ? "bg-green-500"
+                      : orderDetails?.orderStatus === "rejected"
+                      ? "bg-red-500"
+                      : null
                   }`}
                 >
                   {orderDetails?.orderStatus}
