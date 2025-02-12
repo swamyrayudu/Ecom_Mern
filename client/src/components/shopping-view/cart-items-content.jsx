@@ -81,7 +81,7 @@ export default function CartItemContent({ cartItems }) {
               ? cartItems?.salePrice
               : cartItems?.price) * cartItems?.quantity
           ).toFixed(2)}
-          ₹
+          $
         </p>
         <Trash
           onClick={() => handleDeleteCart(cartItems)}

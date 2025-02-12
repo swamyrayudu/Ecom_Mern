@@ -51,39 +51,39 @@ export default function ShoppingorderDetails({ orderDetails }) {
                 </Badge>
               </Label>
             </div>
-            <Separator />
+          </div>
 
-            <div className=" grid gap-4">
-              <div className=" grid gap-2">
-                <div className=" font-medium">Order Details</div>
-                {orderDetails?.cartItems &&
-                orderDetails?.cartItems.length > 0 ? (
-                  orderDetails?.cartItems.map((item, index) => (
-                    <ul key={index} className=" grid gap-3">
-                      <li className=" flex items-center justify-between">
-                        <span>Product Name : {item.title}</span>
-                        <span>quantity : {item.quantity}</span>
-                        <span>$ {item.price}</span>
-                      </li>
-                    </ul>
-                  ))
-                ) : (
-                  <div className="text-muted-foreground">No items found.</div>
-                )}
-              </div>
+          <Separator />
+
+          <div className=" grid gap-4">
+            <div className=" grid gap-2">
+              <div className=" font-medium">Order Details</div>
+              {orderDetails?.cartItems && orderDetails?.cartItems.length > 0 ? (
+                orderDetails?.cartItems.map((item, index) => (
+                  <ul key={index} className=" grid gap-3">
+                    <li className=" flex items-center justify-between">
+                      <span>Product Name : {item.title}</span>
+                      <span>quantity : {item.quantity}</span>
+                      <span>$ {item.price}</span>
+                    </li>
+                  </ul>
+                ))
+              ) : (
+                <div className="text-muted-foreground">No items found.</div>
+              )}
             </div>
+          </div>
 
-            <div className=" grid gap-4">
-              <div className=" grid gap-2">
-                <div className=" font-medium">Shipping Info</div>
-                <div className="grid gap-0.5 text-muted-foreground">
-                  <span>{user?.username}</span>
-                  <span>{orderDetails?.addressDetails?.address}</span>
-                  <span>{orderDetails?.addressDetails?.city}</span>
-                  <span>{orderDetails?.addressDetails?.pincode}</span>
-                  <span>{orderDetails?.addressDetails?.phone}</span>
-                  <span>{orderDetails?.addressDetails?.notes}</span>
-                </div>
+          <div className=" grid gap-4">
+            <div className=" grid gap-2">
+              <div className=" font-medium">Shipping Info</div>
+              <div className="grid gap-0.5 text-muted-foreground">
+                <span>{user?.username}</span>
+                <span>{orderDetails?.addressDetails?.address}</span>
+                <span>{orderDetails?.addressDetails?.city}</span>
+                <span>{orderDetails?.addressDetails?.pincode}</span>
+                <span>{orderDetails?.addressDetails?.phone}</span>
+                <span>{orderDetails?.addressDetails?.notes}</span>
               </div>
             </div>
           </div>

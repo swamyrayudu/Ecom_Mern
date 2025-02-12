@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -12,9 +12,31 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import AdminOrderDeatails from "./order-details";
 import { Dialog } from "../ui/dialog";
+import { useDispatch, useSelector } from "react-redux";
+import { use } from "react";
+import { getallordersAdmin, getOrderDetailsAdmin, restorderDetails } from "@/store/orderSliceAdmin";
+import { Badge } from "../ui/badge";
+import ShoppingorderDetails from "../shopping-view/Shopping-orderDetails";
 
 export default function AdminOdersView() {
-  const [opendialog, setopendialog] = useState(false);
+  const { orderList, orderDetails } = useSelector((state) => state.adminOrder);
+  const [opendia, setopendia] = useState(false);
+  const dispatch = useDispatch();
+  function handlefetchorderdetails(getid) {
+    dispatch(getOrderDetailsAdmin(getid));
+  }
+
+  useEffect(() => {
+    dispatch(getallordersAdmin());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (orderDetails !== null) {
+      setopendia(true);
+    }
+  }, [orderDetails]);
+
+  // console.log(orderDetails);
   return (
     <Card>
       <CardHeader>
@@ -34,20 +56,48 @@ export default function AdminOdersView() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>123456</TableCell>
-              <TableCell>27/12/2009</TableCell>
-              <TableCell>rejected</TableCell>
-              <TableCell>$2999</TableCell>
-              <TableCell>
-                <Dialog open={opendialog} onOpenChange={setopendialog}>
-                  <Button onClick={() => setopendialog(true)}>
-                    View Details
-                  </Button>
-                  <AdminOrderDeatails />
-                </Dialog>
-              </TableCell>
-            </TableRow>
+            {orderList && orderList.length > 0 ? (
+              orderList.map((order, index) => (
+                <TableRow key={index}>
+                  <TableCell>{order?._id}</TableCell>
+                  <TableCell>{order?.orderDate.split("T")[0]}</TableCell>
+                  <TableCell>
+                    <Badge
+                      className={`py-1 px-3 ${
+                        order?.orderStatus === "confirmed"
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                      }`}
+                    >
+                      {order?.orderStatus}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>${order?.totalAmount}</TableCell>
+                  <TableCell>
+                    <Dialog
+                      open={opendia}
+                      onOpenChange={() => {
+                        setopendia(false);
+                        dispatch(restorderDetails());
+                      }}
+                    >
+                      <Button
+                        onClick={() => handlefetchorderdetails(order._id)}
+                      >
+                        View Details
+                      </Button>
+                      <AdminOrderDeatails orderDetails={orderDetails} />
+                    </Dialog>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={5} className="text-center">
+                  No orders found
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </CardContent>

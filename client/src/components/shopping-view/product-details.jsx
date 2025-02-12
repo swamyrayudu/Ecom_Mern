@@ -105,9 +105,9 @@ export default function ProductDetails() {
 
           {/* Price Section */}
           <div className="flex items-center space-x-4 text-lg sm:text-2xl font-semibold">
-            <span className="text-green-600">₹{product.salePrice}</span>
+            <span className="text-green-600">${product.salePrice}</span>
             <span className="line-through text-gray-500 text-base sm:text-xl">
-              ₹{product.price}
+              ${product.price}
             </span>
             {product.salePrice && product.price && (
               <span className="text-orange-500 text-sm sm:text-lg">

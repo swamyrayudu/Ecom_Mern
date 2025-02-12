@@ -130,7 +130,7 @@ export default function ShoppingCheckout() {
                   Total Amount
                 </span>
                 <span className="text-xl font-bold text-black">
-                  {totalCartAmount.toFixed(2)}₹
+                  {totalCartAmount.toFixed(2)}$
                 </span>
 
           
@@ -141,7 +141,7 @@ export default function ShoppingCheckout() {
                 onClick={handlecreateorder}
                 className="w-full mt-6 bg-red-500 text-white py-3 px-6 rounded-lg hover:bg-red-600 transition duration-300"
               >
-                Pay {totalCartAmount.toFixed(2)}₹
+                Pay {totalCartAmount.toFixed(2)}$
               </button>
             </div>
           </div>

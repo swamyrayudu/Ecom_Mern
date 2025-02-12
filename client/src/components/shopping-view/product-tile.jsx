@@ -61,11 +61,11 @@ export default function ShoppingProductTile({
                 product?.salePrice > 0 ? "line-through text-gray-500" : "text-primary"
               }`}
             >
-              ₹{product?.price}
+              ${product?.price}
             </span>
             {product?.salePrice > 0 && (
               <span className="text-lg font-semibold text-red-500">
-                ₹{product?.salePrice}
+                ${product?.salePrice}
               </span>
             )}
           </div>
