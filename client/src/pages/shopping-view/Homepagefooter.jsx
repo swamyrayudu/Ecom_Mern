@@ -99,7 +99,7 @@ export default function Footer() {
 
         <div className="mt-8 border-t border-gray-600 pt-4 text-center">
           <p className="text-sm text-gray-500">
-            &copy; 2024 E-Commerce. All rights reserved.
+            &copy; 2025 E-Commerce. All rights reserved.
           </p>
         </div>
       </div>
