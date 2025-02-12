@@ -3,20 +3,36 @@ import { Label } from "../ui/label";
 import { DialogContent, DialogDescription, DialogTitle } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CommonForm from "../commen/form";
-
+import { getallordersAdmin, getOrderDetailsAdmin, updataorederstatus } from "@/store/orderSliceAdmin";
 
 const initailformdata = {
-  status: "",
+  Status: "",
 };
 
 export default function AdminOrderDeatails({ orderDetails }) {
   const [formdata, setfordata] = useState(initailformdata);
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   function handleupadatastatus(event) {
     event.preventDefault();
+    const { Status } = formdata;
+    dispatch(
+      updataorederstatus({
+        id: orderDetails?._id,
+        orderStatus: Status,
+      })
+    ).then((data) => {
+      if(data?.payload?.success) {
+        dispatch(getOrderDetailsAdmin(orderDetails?._id));  
+        dispatch(getallordersAdmin())
+        setfordata(initailformdata);
+      }
+    });
+
+    console.log(formdata);
   }
   return (
     <>
@@ -97,27 +113,27 @@ export default function AdminOrderDeatails({ orderDetails }) {
                 <span>{orderDetails?.addressDetails?.notes}</span>
               </div>
               <div className="">
-                  <CommonForm
-                    formcontrols={[
-                      {
-                        label: "Order Status",
-                        name: "Status",
-                        componentType: "select",
-                        options: [
-                          { id: "processing", label: "Processing" },
-                          { id: "pending", label: "Pending" },
-                          { id: "rejected", label: "Rejected" },
-                          { id: "shipping", label: "Shipping" },
-                          { id: "delivered", label: "Delivered" },
-                        ],
-                      },
-                    ]}
-                    formdata={formdata}
-                    setformdata={setfordata}
-                    buttonText={"Updata order Status"}
-                    onSubmit={handleupadatastatus}
-                  />
-                </div>
+                <CommonForm
+                  formcontrols={[
+                    {
+                      label: "Order Status",
+                      name: "Status",
+                      componentType: "select",
+                      options: [
+                        { id: "processing", label: "Processing" },
+                        { id: "pending", label: "Pending" },
+                        { id: "rejected", label: "Rejected" },
+                        { id: "shipping", label: "Shipping" },
+                        { id: "delivered", label: "Delivered" },
+                      ],
+                    },
+                  ]}
+                  formdata={formdata}
+                  setformdata={setfordata}
+                  buttonText={"Updata order Status"}
+                  onSubmit={handleupadatastatus}
+                />
+              </div>
             </div>
           </div>
         </div>

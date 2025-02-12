@@ -13,10 +13,9 @@ import { Button } from "../ui/button";
 import AdminOrderDeatails from "./order-details";
 import { Dialog } from "../ui/dialog";
 import { useDispatch, useSelector } from "react-redux";
-import { use } from "react";
 import { getallordersAdmin, getOrderDetailsAdmin, restorderDetails } from "@/store/orderSliceAdmin";
 import { Badge } from "../ui/badge";
-import ShoppingorderDetails from "../shopping-view/Shopping-orderDetails";
+
 
 export default function AdminOdersView() {
   const { orderList, orderDetails } = useSelector((state) => state.adminOrder);

@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Orders = require("../../models/Order");
 
 const getAllordersAdmin = async (req, res) => {
@@ -49,4 +50,32 @@ const getAllOrderDetailsAdmin = async (req, res) => {
   }
 };
 
-module.exports = { getAllOrderDetailsAdmin, getAllordersAdmin };
+const upadateorderStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { orderStatus } = req.body;
+
+    const order = await Orders.findById(id);
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "No order found",
+      });
+    }
+
+    await Orders.findByIdAndUpdate(id, { orderStatus });
+
+    res.status(200).json({
+      success: true,
+      message: "Order status updated",
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      message: "error occured",
+    });
+  }
+};
+
+module.exports = { getAllOrderDetailsAdmin, getAllordersAdmin, upadateorderStatus };
