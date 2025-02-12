@@ -9,7 +9,7 @@ const ShoppingcartRouter = require("./routes/cart/cart-router");
 const ShoppingAddressRouter = require("./routes/shop/address-router");
 const ShoppingOrderRouter = require("./routes/shop/order-router");
 const AdminOrderRouter = require("./routes/admin/order-router");
-
+const shopSearchRouter = require("./routes/shop/search-routes");
 
 const app = express();
 
@@ -28,6 +28,8 @@ app.use("/api/shopping/cart", ShoppingcartRouter);
 app.use("/api/shopping/address", ShoppingAddressRouter);
 app.use("/api/shopping/order", ShoppingOrderRouter);
 app.use("/api/admin/orders", AdminOrderRouter);
+app.use("/api/shopping/search", shopSearchRouter);
+
 
 
 // MongoDB connection
