@@ -18,7 +18,7 @@ export default function ShoppingProductTile({
   };
 
   const toggleLike = (e) => {
-    e.stopPropagation(); // Prevents triggering the card click event
+    e.stopPropagation();
     setLiked(!liked);
   };
 
@@ -73,12 +73,21 @@ export default function ShoppingProductTile({
       </div>
 
       <CardFooter className="p-4">
-        <Button
-          onClick={() => handleProductCart(product?._id)}
-          className="w-full bg-red-500 hover:bg-red-600 text-white font-medium"
+        {
+          product?.totalStock === 0 ? 
+          <Button
+          className="w-full opacity-65 bg-red-500 hover:bg-red-400 cursor-not-allowed text-white font-medium"
         >
-          Add to Cart
-        </Button>
+          Out of Stock
+        </Button> :
+        <Button
+        onClick={() => handleProductCart(product?._id)}
+        className="w-full bg-red-500 hover:bg-red-600 text-white font-medium"
+      >
+        Add to Cart
+      </Button>
+        }
+        
       </CardFooter>
     </Card>
   );

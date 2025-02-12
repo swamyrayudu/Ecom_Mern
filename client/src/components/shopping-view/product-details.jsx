@@ -121,19 +121,29 @@ export default function ProductDetails() {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mt-4">
-            <button
-              onClick={() => handleaddTocart(product._id)}
-              className="w-full sm:w-1/2 bg-red-500 hover:bg-red-600 text-white py-2 sm:py-3 rounded-md shadow-md"
-            >
-              ADD TO CART
-            </button>
+            {product.totalStock === 0 ? (
+              <button
+                className="w-full sm:w-1/2 bg-red-500 hover:bg-red-600 text-white py-2 sm:py-3 rounded-md shadow-md opacity-65 cursor-not-allowed"
+              >
+                Out of Stock
+              </button>
+            ) : (
+              <button
+                onClick={() => handleaddTocart(product._id)}
+                className="w-full sm:w-1/2 bg-red-500 hover:bg-red-600 text-white py-2 sm:py-3 rounded-md shadow-md"
+              >
+                ADD TO CART
+              </button>
+            )}
             <motion.button
               onClick={handleWishlistClick}
               className="w-full sm:w-1/2 border border-gray-300 hover:bg-gray-100 text-gray-600 py-2 sm:py-3 rounded-md flex items-center justify-center gap-2"
               whileTap={{ scale: 1.2 }} // Animation on click
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <FaHeart className={`${isLiked ? "text-red-500" : "text-gray-600"}`} />
+              <FaHeart
+                className={`${isLiked ? "text-red-500" : "text-gray-600"}`}
+              />
               WISHLIST
             </motion.button>
           </div>

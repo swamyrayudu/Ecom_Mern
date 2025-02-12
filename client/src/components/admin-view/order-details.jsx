@@ -10,6 +10,7 @@ import {
   getOrderDetailsAdmin,
   updataorederstatus,
 } from "@/store/orderSliceAdmin";
+import { useToast } from "@/hooks/use-toast";
 
 const initailformdata = {
   Status: "",
@@ -19,6 +20,7 @@ export default function AdminOrderDeatails({ orderDetails }) {
   const [formdata, setfordata] = useState(initailformdata);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const {toast} = useToast();
 
   function handleupadatastatus(event) {
     event.preventDefault();
@@ -33,6 +35,10 @@ export default function AdminOrderDeatails({ orderDetails }) {
         dispatch(getOrderDetailsAdmin(orderDetails?._id));
         dispatch(getallordersAdmin());
         setfordata(initailformdata);
+        toast({
+          title: "Order updated successfully!",
+          description: `Order Status Updated to ${formdata.Status}`,
+        })
       }
     });
   }

@@ -1,6 +1,7 @@
 const Orders = require("../../models/Order");
 const Cart = require("../../models/Cart");
 const paypal = require("../../helpers/Paypal");
+const Product = require("../../models/products");
 
 const createorder = async (req, res) => {
   try {
@@ -110,6 +111,18 @@ const caputurepayment = async (req, res) => {
     order.paymentId = paymentId;
     order.payerId = payerId;
 
+    for (let item of order.cartItems) {
+      const product = await Product.findById(item.productId);
+      if (!product) {
+        return res.status(404).json({
+          success: false,
+          message: "Product not found",
+        });
+      }
+      product.totalStock = product.totalStock - item.quantity;
+      await product.save();
+    }
+
     const getCartId = order.cartId;
     await Cart.findByIdAndDelete(getCartId);
 
@@ -159,7 +172,7 @@ const getAllOrderDetails = async (req, res) => {
   try {
     const { id } = req.params;
     const order = await Orders.findById(id);
-    if(!order) {
+    if (!order) {
       return res.status(404).json({
         success: false,
         message: "No order found",
