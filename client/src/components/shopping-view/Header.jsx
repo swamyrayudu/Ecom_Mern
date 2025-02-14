@@ -49,7 +49,7 @@ export default function ShoppingHeader() {
           <Link
             to={menuItem.path}
             key={menuItem.id}
-            className='text-base font-semibold cursor-pointer hover:text-red-600 transition-colors'
+            className="text-base font-semibold cursor-pointer hover:text-red-600 transition-colors"
           >
             {menuItem.label}
           </Link>
@@ -74,9 +74,12 @@ export default function ShoppingHeader() {
             onClick={() => setOpenCart(true)}
             variant="outline"
             size="icon"
-            className="hover:bg-gray-100 transition-colors"
+            className="relative hover:bg-gray-100 transition-colors"
           >
             <ShoppingCart className="w-6 h-6" />
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              {cartItems?.items?.length || 0}
+            </span>
             <span className="sr-only">User Cart</span>
           </Button>
           <CartWrapper
@@ -102,8 +105,6 @@ export default function ShoppingHeader() {
             <DropdownMenuItem>
               <User className="w-6 h-6 mr-2" />
               <Link to="profile">Profile</Link>
-              
-              
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>

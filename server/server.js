@@ -10,6 +10,7 @@ const ShoppingAddressRouter = require("./routes/shop/address-router");
 const ShoppingOrderRouter = require("./routes/shop/order-router");
 const AdminOrderRouter = require("./routes/admin/order-router");
 const searchRouter = require("./routes/shop/search-router"); // Add search router
+const commonRouter = require("./routes/commen/feature-router");
 
 const app = express();
 
@@ -17,6 +18,13 @@ const corsOptions = {
   origin: "http://localhost:5173",
   credentials: true,
 };
+
+
+
+
+
+
+
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
@@ -28,7 +36,9 @@ app.use("/api/shopping/cart", ShoppingcartRouter);
 app.use("/api/shopping/address", ShoppingAddressRouter);
 app.use("/api/shopping/order", ShoppingOrderRouter);
 app.use("/api/admin/orders", AdminOrderRouter);
-app.use("/api/shopping", searchRouter); // Use search router
+app.use("/api/shopping", searchRouter);
+app.use("/api/commen/feature", commonRouter);
+
 
 // MongoDB connection
 mongoose

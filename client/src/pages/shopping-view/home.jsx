@@ -1,12 +1,15 @@
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { Card, CardContent } from "@/components/ui/card";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addcart, fetchcartItems } from "@/store/shopslice/cartSlice";
 import { fetchallfilteredproducts } from "@/store/shopslice/productSlice";
 import { useToast } from "@/hooks/use-toast";
 import Footer from "./Homepagefooter";
+import { getfeatureimage } from "@/store/coomon";
+import { Button } from "@/components/ui/button";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 export default function ShoppingHomePage() {
   const categories = [
@@ -72,9 +75,13 @@ export default function ShoppingHomePage() {
 
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.shopproducts);
+  const { cartItems } = useSelector((state) => state.shoppingcart);
   const { user } = useSelector((state) => state.auth);
+  const { featureImage } = useSelector((state) => state.image);
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const handelnavegatecategory = (section, getcuurentItem) => {
     sessionStorage.removeItem("filter");
@@ -85,7 +92,25 @@ export default function ShoppingHomePage() {
     navigate("/shopping/listing");
   };
 
-  const handleProductCart = (productId) => {
+  const handleProductCart = (productId, getotalStock) => {
+    let getCartItems = cartItems.items || [];
+
+    if (getCartItems.length) {
+      const indexOfCurrentItem = getCartItems.findIndex(
+        (item) => item.productId === productId
+      );
+      if (indexOfCurrentItem > -1) {
+        const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+        if (getQuantity + 1 > getotalStock) {
+          toast({
+            title: `Only ${getQuantity} quantity can be added for this item`,
+            variant: "destructive",
+          });
+
+          return;
+        }
+      }
+    }
     dispatch(addcart({ userId: user?.id, productId, quantity: 1 })).then(
       (data) => {
         if (data?.payload?.success) {
@@ -115,14 +140,57 @@ export default function ShoppingHomePage() {
     );
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getfeatureimage());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImage.length);
+    }, 15000);
+
+    return () => clearInterval(timer);
+  }, [featureImage]);
+
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="relative w-full overflow-hidden sm:h-[300px] md:h-[400px] lg:h-[500px]">
-        <img
-          src="https://raw.githubusercontent.com/sangammukherjee/mern-ecommerce-2024/refs/heads/master/client/src/assets/banner-1.webp"
-          alt="Banner"
-          className="w-full sm:h-[300px] md:h-[400px] lg:h-[500px] object-cover"
-        />
+      <div className="relative w-full h-[600px] overflow-hidden">
+        {featureImage && featureImage.length > 0
+          ? featureImage.map((slide, index) => (
+              <img
+                src={slide?.image}
+                key={index}
+                className={`${
+                  index === currentSlide ? "opacity-100" : "opacity-0"
+                } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
+              />
+            ))
+          : null}
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() =>
+            setCurrentSlide(
+              (prevSlide) =>
+                (prevSlide - 1 + featureImage.length) % featureImage.length
+            )
+          }
+          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
+        >
+          <ChevronLeftIcon className="w-4 h-4" />
+        </Button>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() =>
+            setCurrentSlide(
+              (prevSlide) => (prevSlide + 1) % featureImage.length
+            )
+          }
+          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80"
+        >
+          <ChevronRightIcon className="w-4 h-4" />
+        </Button>
       </div>
 
       <div className="py-12 bg-gray-50">

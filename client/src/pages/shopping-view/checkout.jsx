@@ -36,7 +36,7 @@ export default function ShoppingCheckout() {
         description: "Please add some products to cart to proceed.",
         variant: "destructive",
       });
-      return
+      return;
     }
 
     if (!currenaddress) {
@@ -132,16 +132,15 @@ export default function ShoppingCheckout() {
                 <span className="text-xl font-bold text-black">
                   {totalCartAmount.toFixed(2)}$
                 </span>
-
-          
-          
               </div>
               {/* Pay Button */}
               <button
                 onClick={handlecreateorder}
                 className="w-full mt-6 bg-red-500 text-white py-3 px-6 rounded-lg hover:bg-red-600 transition duration-300"
               >
-                Pay {totalCartAmount.toFixed(2)}$
+                {ispayment
+                  ? "Processing paypal payment ..."
+                  : `Pay ${totalCartAmount.toFixed(2)}$`}
               </button>
             </div>
           </div>
@@ -151,7 +150,10 @@ export default function ShoppingCheckout() {
             <h2 className="text-2xl font-semibold mb-6 text-gray-800">
               Delivery Address
             </h2>
-            <Address setcurrentaddress={setcurrentaddress} />
+            <Address
+              selectedID={currenaddress}
+              setcurrentaddress={setcurrentaddress}
+            />
           </div>
         </div>
       </div>

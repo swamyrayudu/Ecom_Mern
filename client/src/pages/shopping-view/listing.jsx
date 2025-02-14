@@ -67,7 +67,7 @@ export default function ShoppingListing() {
   }
 
   function handleProductCart(productId, getotalStock) {
-    console.log(cartItems);
+ 
 
     let getCartItems = cartItems.items || [];
 

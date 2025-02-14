@@ -7,13 +7,14 @@ export default function AddressCard({
   handledeleteaddress,
   handleeditaddress,
   setcurrentaddress,
+  selectedID
 }) {
   return (
     <Card
       onClick={setcurrentaddress ? () => setcurrentaddress(addressInfo) : null}
-      className="shadow-sm border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow bg-white"
+      className={`shadow-sm cursor-pointer border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow bg-white ${selectedID?._id === addressInfo?._id ? 'border-black border-[2px]' : ""}`}
     >
-      <CardContent className="p-5">
+      <CardContent className={`${selectedID === addressInfo?._id ? 'border-black' : ""}  p-5`}>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900">

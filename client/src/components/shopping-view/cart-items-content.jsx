@@ -12,6 +12,8 @@ export default function CartItemContent({ cartItems }) {
   const { user } = useSelector((state) => state.auth);
   const { toast } = useToast();
 
+
+
   function handleUpdateQuantity(getCartItem, actionType) {
     if (actionType === "plus") {
       let getCartItems = allCartItems.items || [];
@@ -38,6 +40,8 @@ export default function CartItemContent({ cartItems }) {
         }
       }
     }
+
+
 
     dispatch(
       updatCartItem({
