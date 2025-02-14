@@ -1,5 +1,6 @@
 import {
   CircleUser,
+  Heart,
   LogOut,
   Menu,
   ShoppingBag,
@@ -24,7 +25,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import { RiLogoutCircleRLine } from "react-icons/ri";
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "../config";
@@ -33,7 +34,7 @@ import { Logoutuser } from "@/store/authSlice";
 import CartWrapper from "./cart-wrapper";
 import { fetchcartItems } from "@/store/shopslice/cartSlice";
 import { Label } from "../ui/label";
-
+import { FaBagShopping } from "react-icons/fa6";
 export default function ShoppingHeader() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shoppingcart);
@@ -69,6 +70,15 @@ export default function ShoppingHeader() {
   function Rightside() {
     return (
       <div className="flex lg:items-center lg:flex-row flex-col gap-6">
+        <Button
+          variant="outline"
+          size="icon"
+          className="relative hover:bg-gray-100 transition-colors"
+        >
+          <span className=" text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+            <Heart className="w-6 h-6" />
+          </span>
+        </Button>
         <Sheet open={openCart} onOpenChange={() => setOpenCart(false)}>
           <Button
             onClick={() => setOpenCart(true)}
@@ -113,7 +123,8 @@ export default function ShoppingHeader() {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handelLogOut}>
-              <LogOut className="w-6 h-6 mr-2" />
+  
+              <RiLogoutCircleRLine className="w-6 h-6 mr-2" />
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -126,7 +137,7 @@ export default function ShoppingHeader() {
     <div className="w-full h-[70px] bg-white flex items-center justify-between px-8 shadow-md border-b border-gray-300">
       <div className="flex items-center">
         <Link to="/shopping/home" className="flex items-center space-x-3">
-          <ShoppingBag className="w-7 h-7 text-red-600" />
+        <FaBagShopping />
           <span className="text-black font-bold text-xl">ShopEase</span>
         </Link>
       </div>

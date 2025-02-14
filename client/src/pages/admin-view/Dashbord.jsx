@@ -12,6 +12,10 @@ export default function AdminDashboard() {
   const dispatch = useDispatch();
   const { featureImage } = useSelector((state) => state.image);
 
+  useEffect(() => {
+    dispatch(getfeatureimage());
+  }, [dispatch]);
+
   function handleuploadfeatureImage() {
     dispatch(addfetureimage(uploadImageUrl)).then((data) => {
       if (data.payload.success) {
@@ -28,19 +32,15 @@ export default function AdminDashboard() {
     });
   }
 
-  useEffect(() => {
-    dispatch(getfeatureimage());
-  }, [dispatch]);
-
   return (
-    <div className="bg-gray-100 flex items-center justify-center p-6">
-      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl">
-        <h1 className="text-3xl font-semibold text-gray-900 mb-6 text-center">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-8">
+      <div className="w-full max-w-6xl bg-white p-10">
+        <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center uppercase">
           Admin Dashboard
         </h1>
 
         {/* Image Upload Section */}
-        <div className="mb-6">
+        <div className="mb-8 bg-gray-50 p-6 rounded-xl shadow-md">
           <ImageUpload
             imageFile={imageFile}
             setimageFile={setImageFile}
@@ -49,36 +49,36 @@ export default function AdminDashboard() {
             setimageload={setImageLoad}
             imageload={imageLoad}
           />
+          <div className="flex justify-center mt-6">
+            <Button
+              onClick={handleuploadfeatureImage}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl text-lg shadow-lg"
+            >
+              Upload
+            </Button>
+          </div>
         </div>
 
-        {/* Display Uploaded Feature Image */}
-        {featureImage && featureImage.length > 0
-          ? featureImage.map((image, index) => (
-              <div key={index} className="flex justify-center mt-4 relative">
+        {/* Display Uploaded Feature Images */}
+        {featureImage && featureImage.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featureImage.map((image, index) => (
+              <div key={index} className="relative bg-white rounded-xl shadow-lg overflow-hidden">
                 <img
                   src={image.image}
                   alt="Feature Preview"
-                  className="w-full max-w-md rounded-lg shadow-lg"
+                  className="w-full h-60 object-cover rounded-xl"
                 />
                 <Button
                   onClick={() => handleDeleteFeatureImage(image._id)}
-                  className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full"
+                  className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full shadow-md"
                 >
                   <Trash2 className="w-5 h-5" />
                 </Button>
               </div>
-            ))
-          : null}
-
-        {/* Upload Button */}
-        <div className="flex justify-center mt-6">
-          <Button
-            onClick={handleuploadfeatureImage}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-md"
-          >
-            Upload
-          </Button>
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

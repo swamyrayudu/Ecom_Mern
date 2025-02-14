@@ -162,7 +162,7 @@ export default function ShoppingHomePage() {
                 key={index}
                 className={`${
                   index === currentSlide ? "opacity-100" : "opacity-0"
-                } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
+                } absolute top-0 left-0 w-full h-full transition-opacity duration-1000`}
               />
             ))
           : null}

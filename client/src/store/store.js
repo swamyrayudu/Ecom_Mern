@@ -18,7 +18,8 @@ const store = configureStore({
         shoppingorder : shoppingOrderSlice,
         adminOrder: AdminOrderSlice,
         search : searchSlice,
-        image : featureImage
+        image : featureImage,
+        
     }
 })
 
