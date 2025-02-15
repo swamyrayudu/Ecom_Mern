@@ -20,6 +20,12 @@ export default function Register() {
   const dispatch =useDispatch()
   const navigate = useNavigate()
   const { toast } =useToast()
+
+  function isFormValid() {
+    return Object.keys(formdata)
+      .map((key) => formdata[key] !== "")
+      .every((item) => item);
+  }
   
     function onSubmit(event)
     {
@@ -56,6 +62,7 @@ export default function Register() {
         formdata={formdata}
         setformdata={setformdata}
         onSubmit={onSubmit}
+        isdiseble={!isFormValid()}
       />
     </div>
   )

@@ -35,7 +35,7 @@ export default function AdminOdersView() {
     }
   }, [orderDetails]);
 
-  // console.log(orderDetails);
+
   return (
     <Card>
       <CardHeader>

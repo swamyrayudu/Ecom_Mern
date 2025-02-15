@@ -10,7 +10,10 @@ const handleimageupload = async (req, res) => {
     res.json({
       success: true,
       result,
-    });
+    });  
+
+
+    
   } catch (err) {
     console.log(err);
     res.json({

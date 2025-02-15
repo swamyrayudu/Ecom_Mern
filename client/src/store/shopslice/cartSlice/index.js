@@ -64,7 +64,6 @@ const shoppingcartSlice = createSlice({
       .addCase(addcart.fulfilled, (state, action) => {
         state.isLoading = false;
         state.cartItems = action?.payload.data;
-        // console.log(action?.payload);
       })
       .addCase(addcart.rejected, (state) => {
         state.isLoading = false;
@@ -96,7 +95,6 @@ const shoppingcartSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updatCartItem.fulfilled, (state, action) => {
-        // console.log("Payload in reducer:", action.payload);
         state.isLoading = false;
         state.cartItems = action.payload.data;
       })

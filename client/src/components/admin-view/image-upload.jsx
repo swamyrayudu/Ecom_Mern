@@ -17,7 +17,6 @@ export default function ImageUpload({
 }) {
   const inputRef = useRef("");
   function handleimagefilechange(event) {
-    console.log(event.target.files);
     const selectedFile = event.target.files?.[0];
     if (selectedFile) setimageFile(selectedFile);
   }
@@ -46,7 +45,7 @@ export default function ImageUpload({
       "http://localhost:9001/api/admin/products/upload-image",
       data
     );
-    console.log(response, "response");
+
     if (response?.data?.success) {
       setuploadImageUrl(response.data.result.url);
       setimageload(false);

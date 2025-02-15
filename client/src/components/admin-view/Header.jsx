@@ -51,7 +51,7 @@ export default function Adminheader({ setopen }) {
           <div
             key={controller.name}
             onClick={() => navigate(controller.path)}
-            className="flex items-center gap-3 cursor-pointer text-gray-700 hover:text-blue-600 hover:bg-gray-100 transition-all px-4 py-2 rounded-lg"
+            className="flex items-center gap-3 cursor-pointer text-gray-700 hover:text-red-600 hover:bg-gray-100 transition-all px-4 py-2 rounded-lg"
           >
             {controller.icon}
             <span>{controller.label}</span>

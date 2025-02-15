@@ -52,7 +52,7 @@ export default function AdminDashboard() {
           <div className="flex justify-center mt-6">
             <Button
               onClick={handleuploadfeatureImage}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl text-lg shadow-lg"
+              className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl text-lg shadow-lg"
             >
               Upload
             </Button>

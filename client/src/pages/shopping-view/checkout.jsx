@@ -30,14 +30,15 @@ export default function ShoppingCheckout() {
       : 0;
 
   function handlecreateorder() {
-    if (cartItems.items.length === 0) {
+    if (!cartItems?.items || cartItems.items.length === 0) {
       toast({
         title: "Your Cart is Empty!",
-        description: "Please add some products to cart to proceed.",
+        description: "Please add some products to the cart to proceed.",
         variant: "destructive",
       });
       return;
     }
+    
 
     if (!currenaddress) {
       toast({
@@ -50,7 +51,7 @@ export default function ShoppingCheckout() {
     const orderdata = {
       userId: user?.id,
       cartId: cartItems._id,
-      cartItems: cartItems.items.map((singlecartItem) => ({
+      cartItems: cartItems?.items?.map((singlecartItem) => ({
         productId: singlecartItem?.productId,
         image: singlecartItem?.image,
         title: singlecartItem?.title,
@@ -89,14 +90,13 @@ export default function ShoppingCheckout() {
     window.location.href = approvalURL;
   }
 
-  // console.log(currenaddress);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div className="relative h-[300px] w-full overflow-hidden">
         <img
-          src="https://github.com/sangammukherjee/mern-ecommerce-2024/blob/master/client/src/assets/account.jpg?raw=true"
+          src="https://files.oaiusercontent.com/file-B411PKDg7pfwevzcZnvDKB?se=2025-02-14T09%3A42%3A39Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dc033a3f5-d261-4d64-85b4-75316ea05ade.webp&sig=hdZFuRmY6g/YQut%2Ba09RelQolMOAT6Bncm%2BuM/q/K8w%3D"
           className="h-full w-full object-cover object-center"
           alt="Shopping Checkout"
         />

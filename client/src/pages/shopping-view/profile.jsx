@@ -7,7 +7,6 @@ export default function ProfileShop() {
   const { user } = useSelector((state) => state.auth);
   const userInitial = user?.name ? user.name.charAt(0).toUpperCase() : "U";
 
-  console.log(user);
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-6">
       <motion.div 
