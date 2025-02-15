@@ -42,7 +42,7 @@ export default function ImageUpload({
     const data = new FormData();
     data.append("my_files", imageFile);
     const response = await axios.post(
-      "http://localhost:9001/api/admin/products/upload-image",
+      `${import.meta.env.VITE_API_URL}/api/admin/products/upload-image`,
       data
     );
 

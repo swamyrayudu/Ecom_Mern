@@ -1,3 +1,6 @@
+require('dotenv').config()
+
+
 const mongoose = require("mongoose");
 const express = require("express");
 const cookieParser = require("cookie-parser");
@@ -19,7 +22,7 @@ const app = express();
 const PORT = process.env.PORT || 9001
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: process.env.CLIENT_BASE_URL,
   methods: ['GET', 'POST', 'DELETE', 'PUT'],
   allowedHeaders: [
     'Content-Type',
@@ -28,7 +31,7 @@ app.use(cors({
     'Expires',
 
   ],
-  credentials : true
+  credentials: true
 }));
 app.use(cookieParser());
 app.use(express.json());
@@ -47,7 +50,7 @@ app.use("/api/commen/feature", commonRouter);
 
 // MongoDB connection
 mongoose
-  .connect("mongodb+srv://swamyrayudu7288:TKTygOwwq5n59TR2@cluster0.oajub.mongodb.net/")
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Database connection successful");
   })
@@ -56,7 +59,7 @@ mongoose
   });
 
 
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
   console.log("server running");
 })
 

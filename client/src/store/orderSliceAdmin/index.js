@@ -10,7 +10,7 @@ export const getallordersAdmin = createAsyncThunk(
   "orders/getallordersAdmin",
   async () => {
     const response = await axios.get(
-      "http://localhost:9001/api/admin/orders/alladminorders"
+      "/api/admin/orders/alladminorders"
     );
     return response.data;
   }
@@ -20,7 +20,7 @@ export const getOrderDetailsAdmin = createAsyncThunk(
   "orders/getOrderDetailsAdmin",
   async (id) => {
     const response = await axios.get(
-      `http://localhost:9001/api/admin/orders/detailsadminorders/${id}`
+      `${import.meta.env.VITE_API_URL}/api/admin/orders/detailsadminorders/${id}`
     );
     return response.data;
   }
@@ -30,7 +30,7 @@ export const updataorederstatus = createAsyncThunk(
   "orders/updataorederstatus",
   async ({ id, orderStatus }) => {
     const response = await axios.put(
-      `http://localhost:9001/api/admin/orders/updateorderstatus/${id}`,
+      `${import.meta.env.VITE_API_URL}/api/admin/orders/updateorderstatus/${id}`,
       {
         orderStatus,
       }
