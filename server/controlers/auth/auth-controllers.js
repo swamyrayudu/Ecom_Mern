@@ -128,6 +128,10 @@ const Logout = (req, res) => {
 // };
 
 
+
+
+
+
 const authMiddlewar = async (req, res, next) => {
   const Headers = req.headers['authorization']
   const token = Headers && Headers.split(' ')[1]

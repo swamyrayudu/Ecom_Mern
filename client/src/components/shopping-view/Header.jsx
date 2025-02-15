@@ -35,15 +35,17 @@ import CartWrapper from "./cart-wrapper";
 import { fetchcartItems } from "@/store/shopslice/cartSlice";
 import { Label } from "../ui/label";
 import { FaBagShopping } from "react-icons/fa6";
+
 export default function ShoppingHeader() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shoppingcart);
 
   const dispatch = useDispatch();
   const [openCart, setOpenCart] = useState(false);
+  const [openSheet, setOpenSheet] = useState(false); // State to control the sheet
   const navigate = useNavigate();
 
-  function MenuItems() {
+  function MenuItems({ closeSheet }) {
     return (
       <nav className="flex flex-col lg:flex-row lg:items-center gap-8">
         {shoppingViewHeaderMenuItems.map((menuItem) => (
@@ -51,6 +53,7 @@ export default function ShoppingHeader() {
             to={menuItem.path}
             key={menuItem.id}
             className="text-base font-semibold cursor-pointer hover:text-red-600 transition-colors"
+            onClick={closeSheet} // Close the sheet when an item is clicked
           >
             {menuItem.label}
           </Link>
@@ -60,18 +63,16 @@ export default function ShoppingHeader() {
   }
 
   function handelLogOut() {
-    // dispatch(Logoutuser());
-    dispatch(resettoken())
-    sessionStorage.clear()
-    navigate('/auth/login')
-    
+    dispatch(resettoken());
+    sessionStorage.clear();
+    navigate('/auth/login');
   }
 
   useEffect(() => {
     dispatch(fetchcartItems(user.id));
   }, [dispatch]);
 
-  function Rightside() {
+  function Rightside({ closeSheet }) {
     return (
       <div className="flex lg:items-center lg:flex-row flex-col gap-6">
         <Button
@@ -118,16 +119,15 @@ export default function ShoppingHeader() {
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <User className="w-6 h-6 mr-2" />
-              <Link to="profile">Profile</Link>
+              <Link to="profile" onClick={closeSheet}>Profile</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <CircleUser className="w-6 h-6 mr-2" />
-              <Link to="account">Account</Link>
+              <Link to="account" onClick={closeSheet}>Account</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handelLogOut}>
-  
               <RiLogoutCircleRLine className="w-6 h-6 mr-2" />
               Logout
             </DropdownMenuItem>
@@ -141,17 +141,16 @@ export default function ShoppingHeader() {
     <div className="w-full h-[70px] bg-white flex items-center justify-between px-8 shadow-md border-b border-gray-300">
       <div className="flex items-center">
         <Link to="/shopping/home" className="flex items-center space-x-3">
-        <FaBagShopping />
+          <FaBagShopping />
           <span className="text-black font-bold text-xl">ShopEase</span>
         </Link>
       </div>
 
       <div className="hidden lg:flex lg:ml-auto">
-        <MenuItems />
+        <MenuItems closeSheet={() => setOpenSheet(false)} />
       </div>
 
-      <Sheet>
-        <SheetDescription></SheetDescription>
+      <Sheet open={openSheet} onOpenChange={setOpenSheet}>
         <SheetTrigger asChild>
           <Button className="lg:hidden w-12 h-12 rounded-md">
             <Menu className="w-6 h-6" />
@@ -165,16 +164,16 @@ export default function ShoppingHeader() {
               Menu
             </SheetTitle>
           </SheetHeader>
-          <div className="mt-4">
-            <MenuItems />
-            <Rightside />
+          <div className="mt-4 space-y-6">
+            <MenuItems closeSheet={() => setOpenSheet(false)} />
+            <Rightside closeSheet={() => setOpenSheet(false)} />
           </div>
         </SheetContent>
       </Sheet>
 
       {isAuthenticated && (
         <div className="hidden lg:block text-gray-800 ml-6">
-          <Rightside />
+          <Rightside closeSheet={() => setOpenSheet(false)} />
         </div>
       )}
     </div>

@@ -154,110 +154,109 @@ export default function ShoppingHomePage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="relative w-full h-[600px] overflow-hidden">
-        {featureImage && featureImage.length > 0
-          ? featureImage.map((slide, index) => (
+      <div className="relative w-full aspect-[16/9] overflow-hidden">
+  {featureImage && featureImage.length > 0
+    ? featureImage.map((slide, index) => (
+        <img
+          src={slide?.image}
+          key={index}
+          className={`${
+            index === currentSlide ? "opacity-100" : "opacity-0"
+          } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
+          alt={`Slide ${index + 1}`}
+        />
+      ))
+    : null}
+  <Button
+    variant="outline"
+    size="icon"
+    onClick={() =>
+      setCurrentSlide(
+        (prevSlide) =>
+          (prevSlide - 1 + featureImage.length) % featureImage.length
+      )
+    }
+    className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 hover:bg-white/90"
+  >
+    <ChevronLeftIcon className="w-4 h-4" />
+  </Button>
+  <Button
+    variant="outline"
+    size="icon"
+    onClick={() =>
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImage.length)
+    }
+    className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 hover:bg-white/90"
+  >
+    <ChevronRightIcon className="w-4 h-4" />
+  </Button>
+</div>
+
+<div className="py-12 bg-gray-50">
+  <div className="container mx-auto px-4">
+    <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+      Shop By Category
+    </h2>
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      {categories.map((item) => (
+        <Card
+          key={item.id}
+          className="group cursor-pointer shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
+          onClick={() => handelnavegatecategory("category", item)}
+        >
+          <div className="flex flex-col items-center p-4">
+            <div className="relative h-20 w-20 sm:h-28 sm:w-28">
               <img
-                src={slide?.image}
-                key={index}
-                className={`${
-                  index === currentSlide ? "opacity-100" : "opacity-0"
-                } absolute top-0 left-0 w-full h-full transition-opacity duration-1000`}
+                src={item.img}
+                alt={item.label}
+                className="w-full h-full object-cover rounded-full"
               />
-            ))
-          : null}
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() =>
-            setCurrentSlide(
-              (prevSlide) =>
-                (prevSlide - 1 + featureImage.length) % featureImage.length
-            )
-          }
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
-        >
-          <ChevronLeftIcon className="w-4 h-4" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() =>
-            setCurrentSlide(
-              (prevSlide) => (prevSlide + 1) % featureImage.length
-            )
-          }
-          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80"
-        >
-          <ChevronRightIcon className="w-4 h-4" />
-        </Button>
-      </div>
-
-      <div className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
-            Shop By Category
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {categories.map((item) => (
-              <Card
-                key={item.id}
-                className="group cursor-pointer shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
-                onClick={() => handelnavegatecategory("category", item)}
-              >
-                <div className="flex flex-col items-center p-4">
-                  <div className="relative h-28 w-28">
-                    <img
-                      src={item.img}
-                      alt={item.label}
-                      className="w-full h-full object-cover rounded-full"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-25 transition-opacity opacity-0 group-hover:opacity-50 rounded-full" />
-                  </div>
-                  <CardContent className="mt-4 text-center">
-                    <span className="text-sm font-semibold text-gray-700 group-hover:text-gray-900">
-                      {item.label}
-                    </span>
-                  </CardContent>
-                </div>
-              </Card>
-            ))}
+              <div className="absolute inset-0 bg-black bg-opacity-25 transition-opacity opacity-0 group-hover:opacity-50 rounded-full" />
+            </div>
+            <CardContent className="mt-4 text-center">
+              <span className="text-sm font-semibold text-gray-700 group-hover:text-gray-900">
+                {item.label}
+              </span>
+            </CardContent>
           </div>
-        </div>
-      </div>
+        </Card>
+      ))}
+    </div>
+  </div>
+</div>
 
-      <div className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
-            Shop By Brand
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {brand.map((item) => (
-              <Card
-                key={item.id}
-                className="group cursor-pointer shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
-                onClick={() => handelnavegatecategory("brand", item)}
-              >
-                <div className="flex flex-col items-center p-4">
-                  <div className="relative h-28 w-28">
-                    <img
-                      src={item.img}
-                      alt={item.label}
-                      className="w-full h-full object-cover rounded-full"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-25 transition-opacity opacity-0 group-hover:opacity-50 rounded-full" />
-                  </div>
-                  <CardContent className="mt-4 text-center">
-                    <span className="text-sm font-semibold text-gray-700 group-hover:text-gray-900">
-                      {item.label}
-                    </span>
-                  </CardContent>
-                </div>
-              </Card>
-            ))}
+<div className="py-12 bg-gray-50">
+  <div className="container mx-auto px-4">
+    <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+      Shop By Brand
+    </h2>
+    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      {brand.map((item) => (
+        <Card
+          key={item.id}
+          className="group cursor-pointer shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
+          onClick={() => handelnavegatecategory("brand", item)}
+        >
+          <div className="flex flex-col items-center p-4">
+            <div className="relative h-20 w-20 sm:h-28 sm:w-28">
+              <img
+                src={item.img}
+                alt={item.label}
+                className="w-full h-full object-cover rounded-full"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-25 transition-opacity opacity-0 group-hover:opacity-50 rounded-full" />
+            </div>
+            <CardContent className="mt-4 text-center">
+              <span className="text-sm font-semibold text-gray-700 group-hover:text-gray-900">
+                {item.label}
+              </span>
+            </CardContent>
           </div>
-        </div>
-      </div>
+        </Card>
+      ))}
+    </div>
+  </div>
+</div>
 
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
