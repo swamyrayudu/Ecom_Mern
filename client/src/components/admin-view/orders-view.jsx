@@ -16,11 +16,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getallordersAdmin, getOrderDetailsAdmin, restorderDetails } from "@/store/orderSliceAdmin";
 import { Badge } from "../ui/badge";
 
-
 export default function AdminOdersView() {
   const { orderList, orderDetails } = useSelector((state) => state.adminOrder);
   const [opendia, setopendia] = useState(false);
   const dispatch = useDispatch();
+
   function handlefetchorderdetails(getid) {
     dispatch(getOrderDetailsAdmin(getid));
   }
@@ -34,7 +34,6 @@ export default function AdminOdersView() {
       setopendia(true);
     }
   }, [orderDetails]);
-
 
   return (
     <Card>
@@ -62,19 +61,19 @@ export default function AdminOdersView() {
                   <TableCell>{order?.orderDate.split("T")[0]}</TableCell>
                   <TableCell>
                     <Badge
-                     className={`py-1 px-3 ${
-                      order?.orderStatus === "confirmed"
-                        ? "bg-green-500"
-                        : order?.orderStatus === "pending"
-                        ? "bg-yellow-500"
-                        : order?.orderStatus === "shipping"
-                        ? "bg-blue-500"
-                        : order?.orderStatus === "delivered"
-                        ? "bg-green-500"
-                        : order?.orderStatus === "rejected"
-                        ? "bg-red-500"
-                        : null
-                    }`}
+                      className={`py-1 px-3 ${
+                        order?.orderStatus === "confirmed"
+                          ? "bg-green-500"
+                          : order?.orderStatus === "pending"
+                          ? "bg-yellow-500"
+                          : order?.orderStatus === "shipping"
+                          ? "bg-blue-500"
+                          : order?.orderStatus === "delivered"
+                          ? "bg-green-500"
+                          : order?.orderStatus === "rejected"
+                          ? "bg-red-500"
+                          : null
+                      }`}
                     >
                       {order?.orderStatus}
                     </Badge>
