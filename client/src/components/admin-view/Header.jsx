@@ -1,7 +1,7 @@
 import { AlignJustify } from "lucide-react";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
-import { Logoutuser } from "@/store/authSlice";
+import { Logoutuser, resettoken } from "@/store/authSlice";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { RxDashboard } from "react-icons/rx";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
@@ -34,7 +34,11 @@ export default function Adminheader({ setopen }) {
   const navigate = useNavigate();
 
   function handleLogout() {
-    dispatch(Logoutuser());
+    // dispatch(Logoutuser());
+
+        dispatch(resettoken())
+        sessionStorage.clear()
+        navigate('/auth/login')
   }
 
   return (

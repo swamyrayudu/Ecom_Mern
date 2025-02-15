@@ -30,7 +30,7 @@ import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "../config";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Logoutuser } from "@/store/authSlice";
+import { Logoutuser, resettoken } from "@/store/authSlice";
 import CartWrapper from "./cart-wrapper";
 import { fetchcartItems } from "@/store/shopslice/cartSlice";
 import { Label } from "../ui/label";
@@ -41,7 +41,7 @@ export default function ShoppingHeader() {
 
   const dispatch = useDispatch();
   const [openCart, setOpenCart] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   function MenuItems() {
     return (
@@ -60,7 +60,11 @@ export default function ShoppingHeader() {
   }
 
   function handelLogOut() {
-    dispatch(Logoutuser());
+    // dispatch(Logoutuser());
+    dispatch(resettoken())
+    sessionStorage.clear()
+    navigate('/auth/login')
+    
   }
 
   useEffect(() => {

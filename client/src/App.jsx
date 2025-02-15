@@ -34,7 +34,8 @@ function App() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(checkAction());
+    const token =  JSON.parse(sessionStorage.getItem('token'))
+    dispatch(checkAction(token));
   }, [dispatch]);
   if (isLoading)
     return (
