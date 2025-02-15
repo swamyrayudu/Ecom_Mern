@@ -1,10 +1,10 @@
+import img2 from '../../assets/img2.jpg'
 import Address from "@/components/shopping-view/address";
 import CartItemContent from "@/components/shopping-view/cart-items-content";
 import { useToast } from "@/hooks/use-toast";
 import { createOrder } from "@/store/shopslice/orderSlice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 export default function ShoppingCheckout() {
   const { cartItems } = useSelector((state) => state.shoppingcart);
   const { user } = useSelector((state) => state.auth);
@@ -96,7 +96,7 @@ export default function ShoppingCheckout() {
       {/* Hero Section */}
       <div className="relative h-[300px] w-full overflow-hidden">
         <img
-          src="https://files.oaiusercontent.com/file-B411PKDg7pfwevzcZnvDKB?se=2025-02-14T09%3A42%3A39Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dc033a3f5-d261-4d64-85b4-75316ea05ade.webp&sig=hdZFuRmY6g/YQut%2Ba09RelQolMOAT6Bncm%2BuM/q/K8w%3D"
+          src={img2}
           className="h-full w-full object-cover object-center"
           alt="Shopping Checkout"
         />

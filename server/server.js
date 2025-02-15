@@ -14,19 +14,22 @@ const commonRouter = require("./routes/commen/feature-router");
 
 const app = express();
 
-const corsOptions = {
-  origin: "http://localhost:5173",
-  credentials: true,
-};
 
 
+const PORT = process.env.PORT || 9001
 
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'DELETE', 'PUT'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'Cache-Control',
+    'Expires',
 
-
-
-
-
-app.use(cors(corsOptions));
+  ],
+  credentials : true
+}));
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRouter);
@@ -44,7 +47,7 @@ app.use("/api/commen/feature", commonRouter);
 
 // MongoDB connection
 mongoose
-  .connect("mongodb://localhost:27017/ecomers")
+  .connect("mongodb+srv://swamyrayudu7288:TKTygOwwq5n59TR2@cluster0.oajub.mongodb.net/")
   .then(() => {
     console.log("Database connection successful");
   })
@@ -52,6 +55,8 @@ mongoose
     console.log(err);
   });
 
-app.listen(9001, () => {
-  console.log("Server running on port 9001");
-});
+
+app.listen(PORT,()=>{
+  console.log("server running");
+})
+
