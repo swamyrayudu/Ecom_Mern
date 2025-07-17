@@ -34,8 +34,24 @@ function App() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    const token =  JSON.parse(sessionStorage.getItem('token'))
-    dispatch(checkAction(token));
+    try {
+      const tokenFromStorage = sessionStorage.getItem('token');
+      let token = null;
+      
+      if (tokenFromStorage && tokenFromStorage !== 'undefined' && tokenFromStorage !== 'null') {
+        try {
+          token = JSON.parse(tokenFromStorage);
+        } catch (parseError) {
+          console.warn('Failed to parse token from sessionStorage:', parseError);
+          token = null;
+        }
+      }
+      
+      dispatch(checkAction(token));
+    } catch (error) {
+      console.error('Error in useEffect:', error);
+      dispatch(checkAction(null));
+    }
   }, [dispatch]);
   if (isLoading)
     return (
