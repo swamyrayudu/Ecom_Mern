@@ -33,6 +33,9 @@ app.use(cors({
   ],
   credentials: true
 }));
+app.use("/" , (req,res)=> {
+  res.send("Its Working")
+})
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRouter);
